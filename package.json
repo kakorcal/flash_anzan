@@ -4,7 +4,8 @@
   "description": "Flash Anzan",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --ignore client --exec babel-node ./server/app.js"
   },
   "repository": {
     "type": "git",
@@ -38,13 +39,16 @@
     "locus": "^1.2.0",
     "mocha": "^3.0.2",
     "node-sass": "^3.9.3",
+    "nodemon": "^1.11.0",
     "postcss": "^5.2.0",
     "postcss-loader": "^0.13.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2",
+    "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^1.15.1",
+    "webpack-hot-middleware": "^2.13.0",
     "webpack-validator": "^2.2.7"
   },
   "dependencies": {
@@ -54,6 +58,7 @@
     "bootstrap": "^3.3.7",
     "chart.js": "^1.1.1",
     "express": "^4.14.0",
+    "font-awesome": "^4.6.3",
     "jsonwebtoken": "^7.1.9",
     "mongodb": "^2.2.9",
     "mongoose": "^4.6.0",
