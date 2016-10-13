@@ -2,10 +2,13 @@ import webpack from 'webpack'
 import path from 'path'
 import validate from 'webpack-validator'
 
+const fontAwesomePath = path.resolve('webpack/config/font-awesome-sass.config.js');
 const config = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
+    'bootstrap-loader',
+    `font-awesome-sass!${fontAwesomePath}`,
     path.resolve('client/app.js')
   ],
   output: {
@@ -30,9 +33,13 @@ const config = {
         test: /\.css$/,
         loaders: ["style-loader", "css-loader", "postcss-loader"]
       },
-      {
-        test: /\.(woff2?|ttf|eot|svg)$/,
-        loader: 'url?limit=10000'
+      { 
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: "url-loader?limit=10000&mimetype=application/font-woff" 
+      },
+      { 
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
+        loader: "file-loader" 
       },
       {
         test: /bootstrap-sass\/assets\/javascripts\//,
