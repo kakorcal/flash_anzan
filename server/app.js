@@ -2,6 +2,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 import morgan from 'morgan'
+import routes from './routes/index'
+import connectdb from './config/dbConfig'
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,8 +27,10 @@ if(env === 'development'){
   app.use(hotMiddleware(compiler));
 }
 
+connectdb();
 app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use('/users', routes.users);
 
 app.get('/*', (req, res)=>{
   res.send(`
