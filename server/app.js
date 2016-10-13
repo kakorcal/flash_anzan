@@ -39,7 +39,7 @@ app.get('/*', (req, res)=>{
       </head>
       <body>
         <div id='root'></div>
-        <script src='bundle.js'></script>
+        <script src='/public/bundle.js'></script>
       </body>
     </html>
   `);
