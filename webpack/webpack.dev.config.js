@@ -9,7 +9,7 @@ const config = {
     'webpack-hot-middleware/client',
     'bootstrap-loader',
     `font-awesome-sass!${fontAwesomePath}`,
-    path.resolve('client/app.js')
+    path.resolve('client/index.js')
   ],
   output: {
     filename: 'bundle.js',

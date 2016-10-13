@@ -7,7 +7,6 @@ class Home extends Component{
       <div>
         Home Component
         <HomeNav/>
-        <i className='fa fa-star'></i>
       </div>
     );
   }

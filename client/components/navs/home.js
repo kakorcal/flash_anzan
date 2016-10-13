@@ -1,17 +1,15 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 
 class HomeNav extends Component{
   render(){
     return (
       <div>
         <div>
-          <a href='#'>START</a>
+          <Link to='/start'>START</Link>
         </div>
         <div>
-          <a href='#'>ABOUT</a>
-        </div>
-        <div>
-          <a href='#'>LOGIN</a>
+          <Link to='/about'>ABOUT</Link>
         </div>
       </div>
     );
