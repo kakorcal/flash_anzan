@@ -1,2 +1,5 @@
 node_modules
 todos.txt
+.env
+/server/config/env.js
+

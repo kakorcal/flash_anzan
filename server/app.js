@@ -3,13 +3,13 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import morgan from 'morgan'
 import routes from './routes/index'
-import connectdb from './config/dbConfig'
+import connectdb from './db/connect'
+import envs from './config/env'
 
 const app = express();
-const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'development'
+const {PORT, NODE_ENV, DATABASE_URL} = envs;
 
-if(env === 'development'){
+if(NODE_ENV === 'development'){
   const webpack = require('webpack');
   const devConfig = require(path.resolve('webpack/webpack.dev.config')).default;
   const devMiddleware = require('webpack-dev-middleware');
@@ -27,7 +27,7 @@ if(env === 'development'){
   app.use(hotMiddleware(compiler));
 }
 
-connectdb();
+connectdb(DATABASE_URL);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use('/users', routes.users);
@@ -49,7 +49,7 @@ app.get('/*', (req, res)=>{
   `);
 });
 
-app.listen(port, (err)=>{
+app.listen(PORT, (err)=>{
   if(err) console.log(err);
-  console.log(`Listening to port ${port}`);
+  console.log(`Listening to port ${PORT}`);
 });
