@@ -1,11 +1,12 @@
 import mongoose from 'mongoose'
 
 const UserSchema = mongoose.Schema({
-  name: {
+  username: {
     type: String,
-    required: true
+    required: true,
+    index: {unique: true}
   },
-  google_id: {
+  password_digest: {
     type: String,
     required: true
   },
@@ -27,7 +28,7 @@ const UserSchema = mongoose.Schema({
   },
   activity_log: {
     type: Object
-  },
+  }
 });
 
 const User = mongoose.model('User', UserSchema);

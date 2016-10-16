@@ -1,11 +1,17 @@
 import express from 'express'
+import passport from 'passport'
+import jwt from 'jsonwebtoken'
+import User from '../db/User'
+import bcrypt from 'bcrypt'
 
 const router = express.Router();
 
-router.get('/google', (req, res) => {
-  res.send('ok');
+router.post('/new', (req, res) => {
+  
 });
 
-router.get('/google/callback', (req, res) => {
-  res.send('ok');
+router.post('/login', (req, res) => {
+
 });
+
+export default router

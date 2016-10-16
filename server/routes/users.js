@@ -9,22 +9,22 @@ const router = express.Router();
 // });
 
 // TODO: Add authorization middleware for each end point
-router.get('/:id', (req, res) => {
-  User.findOne({google_id: req.params.id})
+router.get('/:identifier', (req, res) => {
+  User.findOne({username: req.params.identifier})
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });
 
-router.put('/:id', (req, res) => {
-  User.findOneAndUpdate({google_id: req.params.id}, req.body.user)
+router.put('/:identifier', (req, res) => {
+  User.findOneAndUpdate({username: req.params.identifier}, req.body.user)
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
-})
+});
 
-router.delete('/:id', (req, res) => {
-  User.remove({google_id: req.params.id})
+router.delete('/:identifier', (req, res) => {
+  User.remove({username: req.params.identifier})
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
-})
+});
 
 export default router
