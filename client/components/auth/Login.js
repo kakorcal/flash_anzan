@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 
-class Pregame extends Component{
+class Login extends Component{
   render(){
     return (
       <div>
-        Pregame Component
+        Login
       </div>
     );
   }
 }
 
-export default Pregame
+export default Login

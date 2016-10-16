@@ -1,3 +1,39 @@
-div > a {
-  color: green;
+.main-panel {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 15px;
+  
+  .top-nav {
+    display: table;
+    content: '';
+    zoom: 1;
+    width: 100%;
+    position: relative;
+    h1 {
+      margin: 0;
+    }
+    button {
+      margin-left: 5px;
+    }
+    .logo {
+      float: left;
+      text-align: center;
+      .flash {
+        margin: 3px 0;
+      }
+    }
+    .auth-group, .description {
+      text-align: right;
+    }
+    .description {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      h5:last-of-type {
+        margin-bottom: 6px;
+      }
+    }
+  }
 }

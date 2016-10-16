@@ -1,14 +1,18 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
 import App from './components/App'
-import Home from './components/Home'
-import About from './components/About'
-import Pregame from './components/Pregame'
+import Main from './components/game/Main'
+import Show from './components/user/Show'
+import Edit from './components/user/Edit'
+import Login from './components/auth/Login'
+import Signup from './components/auth/Signup'
 
 export default (
   <Route path='/' component={App}>
-    <IndexRoute component={Home}/>
-    <Route path='/about' component={About}/>
-    <Route path='/start' component={Pregame}/>
+    <IndexRoute component={Main}/>
+    <Route path='/user' component={Show}/>
+    <Route path='/user/edit' component={Edit}/>
+    <Route path='/auth/login' component={Login}/>
+    <Route path='/auth/signup' component={Signup}/>
   </Route>
 );
