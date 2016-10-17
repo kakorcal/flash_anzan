@@ -1,7 +1,57 @@
+$white: #faf8ef;
+$yellow: #ffff99;
+$cream: #ffffcc;
+$orange: #f1c40f;
+$red: #ff8d6c;
+$green: #bdec8e;
+$blue: #b1dceb;
+$black: #222222;
+
+.flash {
+  &-bg-white  {background: $white;}
+  &-bg-black  {background: $black;}
+  &-bg-cream  {background: $cream;}
+  &-bg-green  {background: $green;}
+  &-bg-yellow {background: $yellow;}
+  &-bg-orange {background: $orange;}
+  &-bg-blue   {background: $blue;}
+  &-bg-red    {background: $red;}
+  &-co-white  {color: $white;}
+  &-co-black  {color: $black;}
+  &-co-cream  {color: $cream;}
+  &-co-green  {color: $green;}
+  &-co-yellow {color: $yellow;}
+  &-co-orange {color: $orange;}
+  &-co-blue   {color: $blue;}
+  &-co-red    {color: $red;}
+}
+
+@mixin fontFace($family,$src,$style: normal,$weight: normal) {
+  @font-face {
+    font-family: $family;
+    src: url('#{$src}.eot'); // IE9 compat
+    src: url('#{$src}.eot?#iefix') format('embedded-opentype'), // IE8 and below
+      url('#{$src}.woff') format('woff'), // standards
+      url('#{$src}.ttf') format('truetype'), // Safari, Android, iOS
+      url('#{$src}.svg##{$family}') format('svg'); // legacy iOS
+
+    font-style: $style;
+    font-weight: $weight;
+  }
+}
+
+@include fontFace('ClearSans-Bold', 'fonts/clear_sans/ClearSans-Bold');
+
+body {
+  background: $white;
+  color: $black;
+  font-family: 'ClearSans-Bold';
+}
+
 .main-panel {
   margin: 0 auto;
   padding: 0 15px;
-  max-width: 500px;
+  max-width: 530px;
   width: 100%;
   margin-top: 15px;
   
@@ -13,6 +63,8 @@
     position: relative;
     h1 {
       margin: 0;
+      color: $orange;
+      letter-spacing: 1px;
     }
     button {
       margin-left: 5px;
@@ -32,8 +84,16 @@
       bottom: 0;
       right: 0;
       h5:last-of-type {
-        margin-bottom: 6px;
+        margin-bottom: 3px;
       }
     }
+  }
+
+  .game-container {
+    margin-top: 40px;
+    border-radius: 6px;
+    /* 280x280 on mobile */
+    width: 500px;
+    height: 500px;
   }
 }
