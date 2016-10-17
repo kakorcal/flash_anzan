@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class Pregame extends Component{
+class Rules extends Component{
   constructor(props){
     super(props);
   }
@@ -13,12 +13,12 @@ class Pregame extends Component{
     return (
       <div>
         <button 
-          className='btn flash-btn flash-bg-red flash-co-yellow'
-          onClick={this.changeView.bind(this, 'rules')}
-        >RULES</button>      
+          className='btn flash-btn flash-bg-blue flash-co-yellow'
+          onClick={this.changeView.bind(this, 'pregame')}
+        >BACK</button>
       </div>
     );
   }
 }
 
-export default Pregame
+export default Rules
