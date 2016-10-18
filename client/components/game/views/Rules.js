@@ -11,9 +11,9 @@ class Rules extends Component{
 
   render(){
     return (
-      <div>
+      <div className='flash-btn-group'>
         <button 
-          className='btn flash-btn flash-bg-blue flash-co-yellow'
+          className='btn flash-btn flash-bg-blue flash-co-cream'
           onClick={this.changeView.bind(this, 'pregame')}
         >BACK</button>
       </div>

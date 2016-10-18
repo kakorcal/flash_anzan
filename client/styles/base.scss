@@ -9,9 +9,9 @@ $black: #222222;
 
 .flash {
   &-btn {
-    box-shadow: .5px .5px 1px #222; 
+    box-shadow: .5px .5px 1px $black; 
     &:active {
-      box-shadow: .5px .5px #222;
+      box-shadow: .5px .5px $black;
       transform: translateY(3px);
     }
     &:hover {
@@ -19,6 +19,12 @@ $black: #222222;
     }
     &.btn:focus {
       outline: 0;
+    }
+    &-group {
+      text-align: center;
+      button {
+        margin-left: 5px;
+      }
     }
   }
   &-bg-white  {background: $white;}
@@ -81,9 +87,7 @@ body {
       margin: 0;
       color: $orange;
       letter-spacing: 1px;
-    }
-    button {
-      margin-left: 5px;
+      text-shadow: .5px .5px 1px $black;
     }
     .logo {
       float: left;
@@ -92,7 +96,7 @@ body {
         margin: 3px 0;
       }
     }
-    .auth-group, .description {
+    .flash-btn-group, .description {
       text-align: right;
     }
     .description {
@@ -112,5 +116,11 @@ body {
     width: 500px;
     height: 500px;
     padding: 15px;
+    .view-group {
+      text-align: center;
+      button {
+        margin-left: 5px;
+      }
+    }
   }
 }

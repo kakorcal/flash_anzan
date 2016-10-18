@@ -14,9 +14,9 @@ class Nav extends Component{
             <h1>ANZAN</h1>            
           </Link>
         </div>
-        <div className='auth-group'>
-          <button className='btn flash-btn flash-bg-orange flash-co-yellow btn-lg'>LOGIN</button>
-          <button className='btn flash-btn flash-bg-orange flash-co-yellow btn-lg'>SIGNUP</button>
+        <div className='flash-btn-group'>
+          <button className='btn flash-btn flash-bg-orange flash-co-cream btn-lg'>LOGIN</button>
+          <button className='btn flash-btn flash-bg-orange flash-co-cream btn-lg'>SIGNUP</button>
         </div>
         <div className='description'>
           <h5>Find The Sum Of The Flashing Numbers!</h5>
