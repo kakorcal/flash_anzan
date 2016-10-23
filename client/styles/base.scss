@@ -17,9 +17,9 @@ $black: #222222;
     &:hover {
       color: $black;
     }
-    &.btn:focus {
-      outline: 0;
-    }
+    // &.btn:focus {
+    //   outline: 0;
+    // }
     &-group {
       text-align: center;
       button {
@@ -116,11 +116,49 @@ body {
     width: 500px;
     height: 500px;
     padding: 15px;
-    .view-group {
+    .pregame {
       text-align: center;
-      button {
-        margin-left: 5px;
-      }
+      &-settings {
+        margin: 60px 0;
+        h2 {
+          font-size: 40px;
+          margin-bottom: 50px;
+          span {
+            &:nth-child(1){
+              text-align: right;
+              position: relative;
+              left: 50px;
+            }
+            &:nth-child(2){
+              text-align: center;
+              position: relative;
+              left: 5px;
+            }
+            &:nth-child(3){
+              text-align: left;
+              position: relative;
+              right: 35px;
+            }
+          }
+          button {
+            position: relative;
+            bottom: 5px;
+            margin-left: 5px;
+            i {
+              font-size: 30px;
+            }
+          }
+        }
+        h3 {
+          margin-left: 40px;
+          span:nth-child(1){
+            text-align: right;
+          }
+          span:nth-child(2){
+            text-align: left;
+          }          
+        }
+      }      
     }
   }
 }
