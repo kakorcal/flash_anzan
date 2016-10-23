@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {updateCurrentLevel} from '../../../redux/actions/levels'
 import levels from '../../../config/levels'
 
 class Pregame extends Component{
@@ -8,7 +10,6 @@ class Pregame extends Component{
       currentLevel: levels[0],
       currentIdx: 0
     };
-
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
@@ -56,10 +57,12 @@ class Pregame extends Component{
 
   componentDidMount(){
     window.addEventListener('keydown', this.handleKeyPress);
+    this.setState(this.props.levels);
   }
 
   componentWillUnmount(){
     window.removeEventListener('keydown', this.handleKeyPress);
+    this.props.updateCurrentLevel(this.state);
   }
 
   render(){
@@ -109,4 +112,14 @@ class Pregame extends Component{
   }
 }
 
-export default Pregame
+Pregame.propTypes = {
+  updateCurrentLevel: React.PropTypes.func.isRequired
+};
+
+function mapStateToProps(state){
+  return {
+    levels: state.levels
+  };
+}
+
+export default connect(mapStateToProps, {updateCurrentLevel})(Pregame)
