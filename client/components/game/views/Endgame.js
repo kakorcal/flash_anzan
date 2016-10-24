@@ -23,12 +23,14 @@ class Endgame extends Component{
 
   displayResultIcon(){
     if(this.props.game.result === 'win'){
-      this.props.audio.correct.play();
+      if(this.props.audio.volume) this.props.audio.correct.play();
       return <h1><i className='fa fa-circle-o fa-5x flash-co-green'/></h1>;
     }else{
       // starting audio from .5 seconds to eliminate quiet interval
-      var id = this.props.audio.wrong.play();
-      this.props.audio.wrong.seek(0.5, id);
+      if(this.props.audio.volume) {
+        var id = this.props.audio.wrong.play();
+        this.props.audio.wrong.seek(0.5, id);
+      }
       return <h1><i className='fa fa-remove fa-5x flash-co-red'/></h1>;
     }
   }

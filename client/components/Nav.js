@@ -15,8 +15,12 @@ class Nav extends Component{
           </Link>
         </div>
         <div className='flash-btn-group'>
-          <button className='btn flash-btn flash-bg-orange flash-co-cream btn-lg'>LOGIN</button>
-          <button className='btn flash-btn flash-bg-orange flash-co-cream btn-lg'>SIGNUP</button>
+          <button className='btn btn-lg flash-btn flash-bg-orange'>
+            <Link to='/auth/login' className='nav-link flash-co-cream'>LOGIN</Link>
+          </button>
+          <button className='btn btn-lg flash-btn flash-bg-orange'>
+            <Link to='/auth/signup' className='nav-link flash-co-cream'>SIGNUP</Link>
+          </button>
         </div>
         <div className='description'>
           <h5>Find The Sum Of The Flashing Numbers!</h5>

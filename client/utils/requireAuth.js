@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {addFlashMessage} from '../actions/flashMessages'
+import {addFlashMessage} from '../redux/actions/flashMessages'
 
 export default function(ComposedComponent) {
   class Authenticate extends Component{

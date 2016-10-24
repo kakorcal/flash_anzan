@@ -2,9 +2,9 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import path from 'path'
 import morgan from 'morgan'
-import passport from 'passport'
 import routes from './routes/index'
 import connectdb from './db/connect'
+import db from './db/index'
 import {PORT, NODE_ENV, DATABASE_URL} from './config/env'
 
 const app = express();
@@ -30,9 +30,8 @@ if(NODE_ENV === 'development'){
 connectdb(DATABASE_URL);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(passport.initialize());
 app.use('/users', routes.users);
-// app.use('/auth', routes.auth);
+app.use('/auth', routes.auth);
 
 app.get('/*', (req, res)=>{
   res.send(`

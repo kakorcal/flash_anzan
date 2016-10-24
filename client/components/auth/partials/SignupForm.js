@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import validateInput from '../../../server/shared/validations/signup'
+import validateInput from '../../../utils/validations/signup'
 import TextFieldGroup from './common/TextFieldGroup'
 import {browserHistory} from 'react-router'
 

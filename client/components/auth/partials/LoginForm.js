@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import TextFieldGroup from './common/TextFieldGroup'
-import validateInput from '../../../server/shared/validations/login'
+import validateInput from '../../../utils/validations/login'
 import {connect} from 'react-redux'
-import {login, setCurrentUser} from '../../actions/authActions'
-import {addFlashMessage} from '../../actions/flashMessages'
+import {login, setCurrentUser} from '../../../redux/actions/auth'
+import {addFlashMessage} from '../../../redux/actions/flashMessages'
 import {browserHistory} from 'react-router'
-import setAuthorizationToken from '../../utils/setAuthorizationToken'
+import setAuthorizationToken from '../../../utils/setAuthorizationToken'
 import jwt from 'jsonwebtoken'
 
 /*

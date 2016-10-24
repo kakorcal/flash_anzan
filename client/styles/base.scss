@@ -99,6 +99,18 @@ body {
     .flash-btn-group, .description {
       text-align: right;
     }
+    .flash-btn-group {
+      button {
+        .nav-link {
+          &:hover{
+            color: $black;
+          }
+          &:focus {
+            color: $cream;
+          }
+        }
+      }
+    }
     .description {
       position: absolute;
       bottom: 0;
@@ -107,6 +119,10 @@ body {
         margin-bottom: 3px;
       }
     }
+  }
+
+  .login, .signup {
+    margin-top: 30px;
   }
 
   .game-container {

@@ -1,4 +1,4 @@
-import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from '../actions/types'
+import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from '../constants'
 import shortid from 'shortid'
 
 export default (state = [], action = {}) => {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import FlashMessage from './common/FlashMessage'
 import {connect} from 'react-redux'
-import {deleteFlashMessage} from '../../actions/flashMessages'
+import {deleteFlashMessage} from '../../../redux/actions/flashMessages'
 
 class FlashMessagesList extends Component{
   render(){

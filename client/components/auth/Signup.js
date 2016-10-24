@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import SignupForm from './partials/SignupForm'
 import {connect} from 'react-redux'
-import {userSignupRequest, isUserExists} from '../actions/signupActions'
-import {addFlashMessage} from '../actions/flashMessages'
+import {userSignupRequest, isUserExists} from '../../redux/actions/signup'
+import {addFlashMessage} from '../../redux/actions/flashMessages'
 
 class Signup extends Component{
   render(){
     return (
-      <div>
+      <div className='signup'>
         <h1>Signup</h1>
         <hr/>
         <SignupForm 

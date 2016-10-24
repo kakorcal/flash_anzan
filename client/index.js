@@ -10,6 +10,14 @@ import './styles/base.scss'
 import blip from './audio/blip_sound_fx.wav'
 import correct from './audio/correct_sound_fx.wav'
 import wrong from './audio/wrong_sound_fx.wav'
+import setAuthorizationToken from './utils/setAuthorizationToken'
+import {setCurrentUser} from './redux/actions/auth'
+import jwt from 'jsonwebtoken'
+
+if(localStorage.jwtToken){
+  setAuthorizationToken(localStorage.jwtToken);
+  store.dispatch(setCurrentUser(jwt.decode(localStorage.jwtToken)));
+}
 
 createHowlers([
   {name: 'blip', fx: blip}, 

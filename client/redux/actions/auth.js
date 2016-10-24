@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {SET_CURRENT_USER} from './types'
-import setAuthorizationToken from '../utils/setAuthorizationToken'
+import {SET_CURRENT_USER} from '../constants'
+import setAuthorizationToken from '../../utils/setAuthorizationToken'
 
 export function login(data){
   return dispatch => {
