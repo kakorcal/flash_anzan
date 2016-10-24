@@ -34,18 +34,7 @@ class Countdown extends Component{
       if(!~count) {
         this.changeView('play');
       }else { 
-        //***************************************************************************
-          // TODO: Prevent react rerendering or find way to load audio only once
-          // Solution: Add audio to server side string. Wrap ReactDOM into audio load callback
-          /*
-            By setting the new state of count, the entire react app rerenders. This
-            means that the SoundFX component is also rerendered, so the audio files 
-            have to be reloaded multiple times. Sound lag will occur if the time interval
-            is smaller than 167ms due to the load time being slower.
-            // document.getElementById('blip').play();
-          */
-        //***************************************************************************
-        this.props.fx.blip.play();
+        if(this.props.audio.volume) this.props.audio.blip.play();
         this.setState({count});
       }
     }, 800);
@@ -73,7 +62,7 @@ class Countdown extends Component{
 
 function mapStateToProps(state){
   return {
-    fx: state.audio
+    audio: state.audio
   };
 }
 

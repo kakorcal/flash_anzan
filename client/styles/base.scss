@@ -119,8 +119,19 @@ body {
     text-align: center;
     position: relative;
     .pregame {
+      &-audio {
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        h1 {
+          margin: 0;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
       &-settings {
-        margin: 60px 0;
+        margin: 70px 0;
         h2 {
           font-size: 40px;
           margin-bottom: 50px;
@@ -167,6 +178,8 @@ body {
       right: 0;
       left: 0;
       transform: translateY(-50%);
+    }
+    .countdown {
       i {
         margin-left: 5px;
       }

@@ -7,7 +7,7 @@ class Play extends Component{
     this.state = {
       timerId: null,
       currentSum: 0,
-      currentNumber: null,
+      currentNumber: 8,
       levels: this.props.levels
     };
   }

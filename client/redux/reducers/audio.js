@@ -1,9 +1,10 @@
-import {SET_SOUND_FX} from '../constants'
+import {SET_SOUND_FX, TOGGLE_VOLUME} from '../constants'
 
 const initialState = {
   blip: null,
   correct: null,
-  wrong: null
+  wrong: null,
+  volume: true
 };
 
 export default (state = initialState, action = {}) => {
@@ -13,6 +14,8 @@ export default (state = initialState, action = {}) => {
         acc[sound.name] = sound;
         return acc;
       }, state);
+    case TOGGLE_VOLUME:
+      return Object.assign({}, state, {volume: !state.volume});
     default: return state;
   }
 }

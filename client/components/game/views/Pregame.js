@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import classnames from 'classnames'
 import {updateCurrentLevel} from '../../../redux/actions/levels'
+import {toggleVolume} from '../../../redux/actions/audio'
 import levels from '../../../config/levels'
 
 class Pregame extends Component{
@@ -11,6 +13,7 @@ class Pregame extends Component{
       currentIdx: 0
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
   }
 
   changeView(view, e){
@@ -55,6 +58,10 @@ class Pregame extends Component{
     }
   }
 
+  handleVolumeChange(e){
+    this.props.toggleVolume();
+  }
+
   componentDidMount(){
     window.addEventListener('keydown', this.handleKeyPress);
     this.setState(this.props.levels);
@@ -67,8 +74,20 @@ class Pregame extends Component{
 
   render(){
     const {currentLevel} = this.state;
+    const {volume} = this.props.audio;
+
     return (
       <div className='pregame'>
+        <div className='pregame-audio'>
+          <h1 onClick={this.handleVolumeChange}>
+            <i className={
+              classnames('fa', {
+                'fa-volume-up': volume,
+                'fa-volume-off': !volume
+              })
+            }></i>
+          </h1>
+        </div>
         <div className='pregame-settings'>
           <h2 className='row'>
             <span className='col col-xs-4'>Level : </span>
@@ -113,7 +132,8 @@ class Pregame extends Component{
 }
 
 Pregame.propTypes = {
-  updateCurrentLevel: React.PropTypes.func.isRequired
+  updateCurrentLevel: React.PropTypes.func.isRequired,
+  toggleVolume: React.PropTypes.func.isRequired
 };
 
 function mapStateToProps(state){
@@ -123,4 +143,4 @@ function mapStateToProps(state){
   };
 }
 
-export default connect(mapStateToProps, {updateCurrentLevel})(Pregame)
+export default connect(mapStateToProps, {updateCurrentLevel, toggleVolume})(Pregame)
