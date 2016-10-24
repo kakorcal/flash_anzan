@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Rules from './views/Rules'
+import About from './views/About'
 import Pregame from './views/Pregame'
 import Countdown from './views/Countdown'
 import Play from './views/Play'
@@ -20,8 +20,8 @@ class Main extends Component{
 
   setView(currentView){
     switch(currentView){
-      case 'rules':
-        return <Rules changeView={this.changeView}/>;
+      case 'about':
+        return <About changeView={this.changeView}/>;
       case 'pregame':
         return <Pregame changeView={this.changeView}/>;
       case 'countdown':

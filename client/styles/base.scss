@@ -118,6 +118,12 @@ body {
     padding: 15px;
     text-align: center;
     position: relative;
+    .about {
+      .description {
+        text-align: left;
+        padding: 0 50px;
+      }
+    }
     .pregame {
       &-audio {
         position: absolute;
@@ -172,7 +178,7 @@ body {
         }
       }      
     }
-    .countdown, .play, .judge, .endgame, .finish {
+    .about, .countdown, .play, .judge, .endgame, .finish {
       position: absolute;
       top: 50%;
       right: 0;

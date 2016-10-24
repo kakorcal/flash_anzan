@@ -123,8 +123,8 @@ class Pregame extends Component{
           >START</button> 
           <button 
             className='btn btn-lg flash-btn flash-bg-red flash-co-cream'
-            onClick={this.changeView.bind(this, 'rules')}
-          >RULES</button>               
+            onClick={this.changeView.bind(this, 'about')}
+          >ABOUT</button>               
         </div>
       </div>
     );
