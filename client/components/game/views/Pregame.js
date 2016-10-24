@@ -118,7 +118,8 @@ Pregame.propTypes = {
 
 function mapStateToProps(state){
   return {
-    levels: state.levels
+    levels: state.levels,
+    audio: state.audio
   };
 }
 

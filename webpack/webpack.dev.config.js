@@ -14,7 +14,7 @@ const config = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(),
-    publicPath: '/public/',
+    publicPath: '/public/'
   },
   module: {
     loaders: [
@@ -40,6 +40,10 @@ const config = {
       { 
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
         loader: "file-loader" 
+      },
+      {
+        test: /\.(wav|mp3)?$/,
+        loader: "file-loader"
       },
       {
         test: /bootstrap-sass\/assets\/javascripts\//,

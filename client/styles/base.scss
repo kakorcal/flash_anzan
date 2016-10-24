@@ -161,7 +161,7 @@ body {
         }
       }      
     }
-    .countdown {
+    .countdown, .play {
       position: absolute;
       top: 50%;
       right: 0;
@@ -169,6 +169,14 @@ body {
       transform: translateY(-50%);
       i {
         margin-left: 5px;
+      }
+    }
+    .play {
+      span {
+        font-size: 170px;  
+        margin: 0;
+        position: relative;
+        bottom: 10px;
       }
     }
   }

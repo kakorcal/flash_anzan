@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
 class Countdown extends Component{
   constructor(props){
@@ -27,17 +28,33 @@ class Countdown extends Component{
     );
   }
 
-  componentWillMount(){
-    this.startTimer();
-  }
-
   startTimer(){
     var timerId = window.setInterval(() => {
       var count = this.state.count - 1;
-      if(!~count) this.changeView('play');
-      else this.setState({count});
-    }, 1000);
+      if(!~count) {
+        this.changeView('play');
+      }else { 
+        //***************************************************************************
+          // TODO: Prevent react rerendering or find way to load audio only once
+          // Solution: Add audio to server side string. Wrap ReactDOM into audio load callback
+          /*
+            By setting the new state of count, the entire react app rerenders. This
+            means that the SoundFX component is also rerendered, so the audio files 
+            have to be reloaded multiple times. Sound lag will occur if the time interval
+            is smaller than 167ms due to the load time being slower.
+            // document.getElementById('blip').play();
+          */
+        //***************************************************************************
+        this.props.fx.blip.play();
+        this.setState({count});
+      }
+    }, 800);
     this.setState({timerId});
+  }
+
+  componentWillMount(){
+    console.log('START TIMER');
+    this.startTimer();
   }
 
   componentWillUnmount(){
@@ -54,4 +71,11 @@ class Countdown extends Component{
   }
 }
 
-export default Countdown
+function mapStateToProps(state){
+  return {
+    fx: state.audio
+  };
+}
+
+export default connect(mapStateToProps)(Countdown)
+

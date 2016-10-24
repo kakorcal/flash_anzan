@@ -1,1 +1,2 @@
 export const UPDATE_CURRENT_LEVEL = 'UPDATE_CURRENT_LEVEL';
+export const SET_SOUND_FX = 'SET_SOUND_FX';
