@@ -32,7 +32,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use('/users', routes.users);
-app.use('/auth', routes.auth);
+// app.use('/auth', routes.auth);
 
 app.get('/*', (req, res)=>{
   res.send(`
