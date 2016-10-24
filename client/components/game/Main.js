@@ -5,6 +5,7 @@ import Countdown from './views/Countdown'
 import Play from './views/Play'
 import Judge from './views/Judge'
 import Endgame from './views/Endgame'
+import Finish from './views/Finish'
 import {connect} from 'react-redux'
 
 class Main extends Component{
@@ -31,6 +32,8 @@ class Main extends Component{
         return <Judge changeView={this.changeView}/>;
       case 'endgame':
         return <Endgame changeView={this.changeView}/>;
+      case 'finish':
+        return <Finish changeView={this.changeView}/>;
     }
   }
 

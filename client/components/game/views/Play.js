@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {setCurrentSum} from '../../../redux/actions/game'
 
 class Play extends Component{
   constructor(props){
@@ -15,6 +16,7 @@ class Play extends Component{
 
   changeView(view){
     var delayId = window.setTimeout(() => {
+      console.log('FINISH GAME');
       this.props.changeView(view);
     }, 1000);
 
@@ -65,6 +67,7 @@ class Play extends Component{
     var timerId = window.setInterval(() => {
       var count = this.state.count - 1;
       if(!~count) {
+        this.props.setCurrentSum(this.state.currentSum);
         this.changeView('judge');
       }else{
         if(this.props.audio.volume) this.props.audio.blip.play();
@@ -97,6 +100,10 @@ class Play extends Component{
   }
 }
 
+Play.propTypes = {
+  setCurrentSum: React.PropTypes.func.isRequired
+};
+
 function mapStateToProps(state){
   return {
     levels: state.levels,
@@ -104,4 +111,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(Play)
+export default connect(mapStateToProps, {setCurrentSum})(Play)

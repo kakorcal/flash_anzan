@@ -172,7 +172,7 @@ body {
         }
       }      
     }
-    .countdown, .play, .judge, .endgame {
+    .countdown, .play, .judge, .endgame, .finish {
       position: absolute;
       top: 50%;
       right: 0;
@@ -207,6 +207,18 @@ body {
         }
         div:nth-child(1){
           margin-bottom: 30px;
+        }
+      }
+    }
+    .finish {
+      .game-results {
+        margin-bottom: 30px;
+      }
+      .flash-btn-group {
+        button {
+          margin: 0 auto;
+          display: block;
+          margin-bottom: 5px;
         }
       }
     }

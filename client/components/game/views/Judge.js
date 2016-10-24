@@ -1,15 +1,26 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {evaluateResult} from '../../../redux/actions/game'
 
 class Judge extends Component{
   constructor(props){
     super(props);
     this.state = {
-      answer: ''
+      answer: '',
+      delayId: null
     };
-
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  changeView(view){
+    var delayId = window.setTimeout(() => {
+      console.log('EVALUATE');
+      this.props.changeView(view);
+    }, 100);
+
+    this.setState({delayId});
   }
 
   handleChange(e){
@@ -19,6 +30,12 @@ class Judge extends Component{
   handleSubmit(e){
     e.preventDefault();
     console.log('ANSWER SUBMIT');
+    if(+this.state.answer === this.props.game.currentSum){
+      this.props.evaluateResult('win', +this.state.answer);
+    }else{
+      this.props.evaluateResult('lose', +this.state.answer);
+    }
+    this.changeView('endgame');
   }
 
   render(){
@@ -43,4 +60,14 @@ class Judge extends Component{
   }
 }
 
-export default Judge
+Judge.propTypes = {
+  evaluateResult: React.PropTypes.func.isRequired
+};
+
+function mapStateToProps(state){
+  return {
+    game: state.game
+  }
+}
+
+export default connect(mapStateToProps, {evaluateResult})(Judge)
