@@ -1,6 +1,64 @@
 import express from 'express'
 import db from '../db/index'
+import commonValidations from '../utils/validations/signup'
+import bcrypt from 'bcrypt'
+import {JWT_SECRET} from '../config/env'
+import {isEmpty} from 'lodash'
+
 const router = express.Router();
+
+function validateInput(data, otherValidations){
+  let {errors} = otherValidations(data);
+  // check db if username is already taken
+  return db.User.findOne({username: data.username})
+    .then(user => {
+      if(user){
+        if(user.username === data.username){
+          errors.username = 'Username already exists';
+        }
+      }
+      return {
+        errors,
+        isValid: isEmpty(errors)
+      }
+    })
+    .catch(err => {
+      // TODO: database property not defined on client side so it will not render
+      errors.database = 'The server is currently down. Please signup at a later time';
+      return {
+        errors,
+        isValid: isEmpty(errors)
+      }
+    });
+}
+
+router.post('/', (req, res)=>{
+  validateInput(req.body, commonValidations)
+    .then(({errors, isValid}) => {
+      if(isValid){
+        const {username, password} = req.body;
+        bcrypt.genSalt(10, (err, salt) => {
+          if(err) res.status(500).json({error: err});
+          bcrypt.hash(password, salt, (err, password_digest) => {
+            db.User.create({username, password_digest})
+              .then(user => {
+                // TODO: SET TOKEN AFTER SIGNUP
+                // const token = jwt.sign({
+                //   id: user.get('id'),
+                //   username: user.username
+                // }, JWT_SECRET);
+                res.json({success: true});
+              })
+              .catch(err => {
+                res.status(500).json({error: err})
+              }); 
+          });
+        });
+      }else{
+        res.status(400).json(errors);
+      }
+    });
+});
 
 // router.post('/', (req, res) => {
 //   db.User.create(req.body.user)

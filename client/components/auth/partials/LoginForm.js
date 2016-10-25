@@ -96,8 +96,8 @@ class LoginForm extends Component{
         <div className="form-group">
           <input type="submit" 
             disabled={isLoading} 
-            className='btn btn-primary btn-lg' 
-            value='Submit'
+            className='btn btn-lg flash-btn flash-bg-blue flash-co-cream' 
+            value='SUBMIT'
           />
         </div>
       </form>

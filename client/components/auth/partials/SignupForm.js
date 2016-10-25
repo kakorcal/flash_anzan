@@ -16,7 +16,7 @@ class SignupForm extends Component{
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.checkUserExists = this.checkUserExists.bind(this);
+    // this.checkUserExists = this.checkUserExists.bind(this);
   }
 
   onChange(e){
@@ -24,26 +24,26 @@ class SignupForm extends Component{
     this.setState({[e.target.name]: e.target.value});
   }
 
-  checkUserExists(e){
-    const field = e.target.name;
-    const value = e.target.value;
+  // checkUserExists(e){
+  //   const field = e.target.name;
+  //   const value = e.target.value;
 
-    if(value !== ''){
-      this.props.isUserExists(value).then(res => {
-        let errors = this.state.errors;
-        let inValid;
-        if(res.data.user){
-          errors[field] = 'There is user with such ' + field;
-          inValid = true;
-        }else{
-          errors[field] = '';
-          inValid = false;
-        }
+  //   if(value !== ''){
+  //     this.props.isUserExists(value).then(res => {
+  //       let errors = this.state.errors;
+  //       let inValid;
+  //       if(res.data.user){
+  //         errors[field] = 'There is user with such ' + field;
+  //         inValid = true;
+  //       }else{
+  //         errors[field] = '';
+  //         inValid = false;
+  //       }
 
-        this.setState({errors, inValid});
-      });
-    }
-  }
+  //       this.setState({errors, inValid});
+  //     });
+  //   }
+  // }
 
   isValid(){
     const {errors, isValid} = validateInput(this.state);
@@ -62,6 +62,7 @@ class SignupForm extends Component{
             type: 'success',
             text: 'You have successfully signed in.'
           });
+          // TODO: SET TOKEN SENT BACK FROM SERVER
           browserHistory.push('/');
         }).catch(err=>{
           console.log(err.response.data);
@@ -80,7 +81,7 @@ class SignupForm extends Component{
           error={errors.username}
           value={this.state.username}
           onChange={this.onChange}
-          checkUserExists={this.checkUserExists}
+          // checkUserExists={this.checkUserExists}
         />
         <TextFieldGroup
           label='Password'
@@ -93,8 +94,8 @@ class SignupForm extends Component{
         <div className="form-group">
           <input type="submit" 
             disabled={this.state.isLoading || this.state.inValid} 
-            className='btn btn-primary btn-lg' 
-            value='Submit'
+            className='btn btn-lg flash-btn flash-bg-blue flash-co-cream' 
+            value='SUBMIT'
           />
         </div>
       </form>
@@ -104,8 +105,8 @@ class SignupForm extends Component{
 
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired,
-  isUserExists: React.PropTypes.func.isRequired
+  addFlashMessage: React.PropTypes.func.isRequired
+  // isUserExists: React.PropTypes.func.isRequired
 };
 
 export default SignupForm

@@ -30,8 +30,8 @@ if(NODE_ENV === 'development'){
 connectdb(DATABASE_URL);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use('/users', routes.users);
-app.use('/auth', routes.auth);
+app.use('/api/users', routes.users);
+app.use('/api/auth', routes.auth);
 
 app.get('/*', (req, res)=>{
   res.send(`
