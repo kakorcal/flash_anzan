@@ -2,6 +2,7 @@ import express from 'express'
 import db from '../db/index'
 import commonValidations from '../utils/validations/signup'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import {JWT_SECRET} from '../config/env'
 import {isEmpty} from 'lodash'
 
@@ -38,19 +39,18 @@ router.post('/', (req, res)=>{
       if(isValid){
         const {username, password} = req.body;
         bcrypt.genSalt(10, (err, salt) => {
-          if(err) res.status(500).json({error: err});
+          if(err) res.status(500).json({error: 'bcrypt error'});
           bcrypt.hash(password, salt, (err, password_digest) => {
             db.User.create({username, password_digest})
               .then(user => {
-                // TODO: SET TOKEN AFTER SIGNUP
-                // const token = jwt.sign({
-                //   id: user.get('id'),
-                //   username: user.username
-                // }, JWT_SECRET);
-                res.json({success: true});
+                const {_id, username} = user; 
+                const token = jwt.sign({_id, username}, JWT_SECRET);
+                eval(require('locus'));
+                res.json({success: true, token});
               })
               .catch(err => {
-                res.status(500).json({error: err})
+                eval(require('locus'));
+                res.status(500).json({error: 'database error'})
               }); 
           });
         });

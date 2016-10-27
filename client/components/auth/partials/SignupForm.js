@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import validateInput from '../../../utils/validations/signup'
 import TextFieldGroup from './common/TextFieldGroup'
 import {browserHistory} from 'react-router'
+import setAuthorizationToken from '../../../utils/setAuthorizationToken'
+import jwt from 'jsonwebtoken'
 
 class SignupForm extends Component{
   constructor(props) {
@@ -58,11 +60,17 @@ class SignupForm extends Component{
       this.props.userSignupRequest(this.state)
         .then(res=>{
           console.log(res.data);
+          const token = res.data.token;
+          localStorage.setItem('jwtToken', token);
+          setAuthorizationToken(token);
+          
+          this.props.setCurrentUser(jwt.decode(token));
+
           this.props.addFlashMessage({
             type: 'success',
             text: 'You have successfully signed in.'
           });
-          // TODO: SET TOKEN SENT BACK FROM SERVER
+
           browserHistory.push('/');
         }).catch(err=>{
           console.log(err.response.data);
@@ -93,7 +101,7 @@ class SignupForm extends Component{
         />
         <div className="form-group">
           <input type="submit" 
-            disabled={this.state.isLoading || this.state.inValid} 
+            disabled={this.state.isLoading} 
             className='btn btn-lg flash-btn flash-bg-blue flash-co-cream' 
             value='SUBMIT'
           />
@@ -105,8 +113,9 @@ class SignupForm extends Component{
 
 SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
-  addFlashMessage: React.PropTypes.func.isRequired
-  // isUserExists: React.PropTypes.func.isRequired
+  setCurrentUser: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired,
+  isUserExists: React.PropTypes.func.isRequired
 };
 
 export default SignupForm

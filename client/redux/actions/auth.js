@@ -9,6 +9,7 @@ export function login(data){
 }
 
 export function setCurrentUser(user){
+  debugger;
   return {
     type: SET_CURRENT_USER,
     user
@@ -17,6 +18,7 @@ export function setCurrentUser(user){
 
 export function logout() {
   return dispatch => {
+    debugger;
     localStorage.removeItem('jwtToken');
     setAuthorizationToken(false);
     dispatch(setCurrentUser({}));
