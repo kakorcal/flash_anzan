@@ -38,14 +38,16 @@ router.post('/', (req, res)=>{
     .then(({errors, isValid}) => {
       if(isValid){
         const {username, password} = req.body;
+
         bcrypt.genSalt(10, (err, salt) => {
           if(err) res.status(500).json({error: 'bcrypt error'});
+
           bcrypt.hash(password, salt, (err, password_digest) => {
+            
             db.User.create({username, password_digest})
               .then(user => {
                 const {_id, username} = user; 
                 const token = jwt.sign({_id, username}, JWT_SECRET);
-                eval(require('locus'));
                 res.json({success: true, token});
               })
               .catch(err => {

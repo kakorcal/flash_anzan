@@ -1,14 +1,32 @@
 import React, {Component} from 'react'
 import classnames from 'classnames'
+import {connect} from 'react-redux'
 
 class FlashMessage extends Component{
   constructor(props){
     super(props);
+    this.state = {
+      delayId: null
+    };
+
     this.onClick = this.onClick.bind(this);
   }
   
   onClick(){
     this.props.deleteFlashMessage(this.props.message.id);
+  }
+
+  componentDidMount(){
+    var delayId = window.setTimeout(() => {
+      if(this.props.messages.length){
+        this.props.deleteFlashMessage(this.props.message.id);
+      }
+    }, 10000);
+    this.setState({delayId});
+  }
+
+  componentWillUnmount(){
+    window.clearTimeout(this.state.delayId);
   }
 
   render(){
@@ -30,4 +48,10 @@ FlashMessage.propTypes = {
   deleteFlashMessage: React.PropTypes.func.isRequired
 };
 
-export default FlashMessage
+function mapStateToProps(state){
+  return {
+    messages: state.flashMessages
+  };
+}
+
+export default connect(mapStateToProps)(FlashMessage)

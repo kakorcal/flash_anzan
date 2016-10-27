@@ -2,11 +2,16 @@ import React, {Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {logout} from '../redux/actions/auth'
+import {addFlashMessage} from '../redux/actions/flashMessages'
 
 class Nav extends Component{
   logout(e){
     e.preventDefault();
     this.props.logout();
+    this.props.addFlashMessage({
+      type: 'success',
+      text: 'You have successfully logged out.'
+    });
   }
 
   render(){
@@ -60,7 +65,8 @@ class Nav extends Component{
 // we expect auth to be in the component 
 Nav.propTypes = {
   auth: React.PropTypes.object.isRequired,
-  logout: React.PropTypes.func.isRequired
+  logout: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired
 };
 
 // get a slice of the redux store
@@ -70,4 +76,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {logout})(Nav);
+export default connect(mapStateToProps, {logout, addFlashMessage})(Nav);

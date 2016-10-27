@@ -6,6 +6,8 @@ $red: #ff8d6c;
 $green: #bdec8e;
 $blue: #b1dceb;
 $black: #222222;
+$darkgreen: green;
+$darkred: red;
 
 .flash {
   &-btn {
@@ -35,6 +37,8 @@ $black: #222222;
   &-bg-orange {background: $orange;}
   &-bg-blue   {background: $blue;}
   &-bg-red    {background: $red;}
+  &-bg-dark-red {background: $darkred;}
+  &-bg-dark-green {background: $darkgreen;}
   &-co-white  {color: $white;}
   &-co-black  {color: $black;}
   &-co-cream  {color: $cream;}
@@ -43,6 +47,8 @@ $black: #222222;
   &-co-orange {color: $orange;}
   &-co-blue   {color: $blue;}
   &-co-red    {color: $red;}
+  &-co-dark-red {color: $darkred;}
+  &-co-dark-green {color: $darkgreen;}
 }
 
 @mixin fontFace($family,$src,$style: normal,$weight: normal) {
