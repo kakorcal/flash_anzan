@@ -24,8 +24,7 @@ function validateInput(data, otherValidations){
       }
     })
     .catch(err => {
-      // TODO: database property not defined on client side so it will not render
-      errors.database = 'The server is currently down. Please signup at a later time';
+      errors.server = 'The server is currently down. Please signup at a later time';
       return {
         errors,
         isValid: isEmpty(errors)
@@ -40,10 +39,10 @@ router.post('/', (req, res)=>{
         const {username, password} = req.body;
 
         bcrypt.genSalt(10, (err, salt) => {
-          if(err) res.status(500).json({error: 'bcrypt error'});
+          if(err || errors.server) res.status(500).json({error: 'The server is currently down. Please signup at a later time'});
 
           bcrypt.hash(password, salt, (err, password_digest) => {
-            
+
             db.User.create({username, password_digest})
               .then(user => {
                 const {_id, username} = user; 
@@ -51,8 +50,7 @@ router.post('/', (req, res)=>{
                 res.json({success: true, token});
               })
               .catch(err => {
-                eval(require('locus'));
-                res.status(500).json({error: 'database error'})
+                res.status(500).json({error: 'The server is currently down. Please signup at a later time'})
               }); 
           });
         });
