@@ -75,10 +75,12 @@ class SignupForm extends Component{
         }).catch(err=>{
           const message = err.response.data.error;
           console.log(err.response.data);
-          this.props.addFlashMessage({
-            type: 'error',
-            text: message
-          });
+          if(err.response.status >= 500){
+            this.props.addFlashMessage({
+              type: 'error',
+              text: message
+            });            
+          }
 
           this.setState({errors: err.response.data, isLoading: false});
         });

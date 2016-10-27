@@ -10,32 +10,29 @@ let router = express.Router();
 router.post('/', (req, res) => {
   const {identifier, password} = req.body;
 
-  // User.query({
-  //   where: {username: identifier}
-  // }).fetch().then(user => {
-  //   if(user){
-  //     bcrypt.compare(password, user.get('password'), (err, match) => {
-  //       if(err) res.status(500).json({errors: {form: 'Server down. Please try at a later time.'}})
-  //       if(match){
-  //         const token = jwt.sign({
-  //           id: user.get('id'),
-  //           username: user.get('username')
-  //         }, JWT_SECRET);
-
-  //         res.json({token});
-  //       }else{
-  //         res.status(401).json({form: 'Invalid Credentials.'});    
-  //       }
-  //     });
-  //   }else{
-  //     // unauthorized
-  //     res.status(401).json({form: 'Invalid Credentials.'});
-  //   }
-  // })
-});
-
-router.get('/user', authenticate, (req, res) => {
-
+  db.User.findOne({username: identifier})
+    .then(user => {
+      if(user){
+        bcrypt.compare(password, user.password_digest, (err, match) => {
+          if(err) res.status(500).json({error: 'The server is currently down. Please login at a later time'});
+          if(match){
+            const {_id, username} = user;
+            const token = jwt.sign({_id, username}, JWT_SECRET);
+            res.json({success: true, token});
+          }else{
+            // password not matching
+            res.status(401).json({form: 'Invalid Credentials.'});
+          }
+        })
+      }else{
+        // not in db
+        res.status(401).json({form: 'Invalid Credentials.'});
+      }
+    })
+    .catch(err => {
+      // server error
+      res.status(500).json({error: 'The server is currently down. Please login at a later time'});
+    });
 });
 
 export default router
