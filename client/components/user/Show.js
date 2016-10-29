@@ -30,23 +30,26 @@ class Show extends Component{
     let day = d.getDate();
     let month = d.getMonth();
     let year = d.getFullYear();
+    // monthes need to be incremented because its range is 0-11
     return (++month) + '/' + day + '/' + year;
   } 
 
   handleDeleteUser(e){
-
+    
   }
 
   componentWillMount(){
-    this.props.getCurrentUser(this.props.user._id)
-      .then(({data}) => {
-        if(!data) this.callFlashMessage();
-        // console.log('DATA', data);
-        this.setState(data);
-      })
-      .catch(err => {
-        this.callFlashMessage();
-      });
+    if(this.props.auth.isAuthenticated){
+      this.props.getCurrentUser(this.props.auth.user._id)
+        .then(({data}) => {
+          if(!data) this.callFlashMessage();
+          // console.log('DATA', data);
+          this.setState(data);
+        })
+        .catch(err => {
+          this.callFlashMessage();
+        });
+    }
   }
 
   render(){
@@ -91,7 +94,7 @@ Show.propTypes = {
 
 function mapStateToProps(state){
   return {
-    user: state.auth.user
+    auth: state.auth
   };
 }
 
