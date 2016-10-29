@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER} from '../constants'
+import {SET_CURRENT_USER, DELETE_CURRENT_USER} from '../constants'
 import {isEmpty} from 'lodash'
 
 const initialState = {
@@ -12,7 +12,19 @@ export default (state = initialState, action = {}) => {
       return {
         isAuthenticated: !isEmpty(action.user),
         user: action.user
-      }
+      };
+    // case GET_CURRENT_USER:
+    //   return {
+    //     isAuthenticated: !isEmpty(action.user),
+    //     user: action.user
+    //   };
+    // case EDIT_CURRENT_USER:
+    //   return {
+    //     isAuthenticated: !isEmpty(action.user),
+    //     user: action.user
+    //   };
+    case DELETE_CURRENT_USER:
+      return Object.assign({}, initialState);
     default: return state;
   }
 }

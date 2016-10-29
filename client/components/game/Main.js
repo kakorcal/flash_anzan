@@ -33,7 +33,9 @@ class Main extends Component{
       case 'endgame':
         return <Endgame changeView={this.changeView}/>;
       case 'finish':
-        return <Finish changeView={this.changeView}/>;
+        return <Finish changeView={this.changeView} isAuthenticated={this.props.isAuthenticated}/>;
+      default: 
+        return <Pregame changeView={this.changeView}/>;
     }
   }
 
@@ -52,4 +54,10 @@ class Main extends Component{
   }
 }
 
-export default Main
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+}
+
+export default connect(mapStateToProps)(Main)

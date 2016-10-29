@@ -62,7 +62,8 @@ router.post('/', (req, res)=>{
 
 // TODO: Add authorization middleware for each end point
 router.get('/:identifier', (req, res) => {
-  db.User.findOne({username: req.params.identifier})
+  db.User.findOne({_id: req.params.identifier})
+    .select('-password_digest')
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });

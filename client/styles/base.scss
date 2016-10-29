@@ -131,6 +131,23 @@ body {
     margin-top: 30px;
   }
 
+  .show {
+    .user-info {
+      display: table;
+      content: '';
+      zoom: 1;
+      width: 100%;
+
+      &-desc {
+        img {
+          margin-bottom: 20px;
+          box-shadow: .5px .5px 1px $black;
+          width: 100%;
+        }
+      }
+    }
+  }
+
   .game-container {
     margin-top: 30px;
     border-radius: 6px;

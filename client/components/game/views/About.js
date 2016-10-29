@@ -13,7 +13,7 @@ class About extends Component{
     return (
       <div className='about'>
         <div className='description'>
-          <p>Flash Anzan, is a mental arithmetic application where players can train their memory by calculating the sum of numbers that flash on the screen. This game was originally created by a Japanese teacher as an alternative for using the <a href="https://en.wikipedia.org/wiki/Soroban" target='_blank'>soroban</a>.</p>
+          <p>Flash Anzan is a mental arithmetic application where players can train their memory by calculating the sum of numbers that flash on the screen. This game was originally created by a Japanese teacher as an alternative for using the <a href="https://en.wikipedia.org/wiki/Soroban" target='_blank'>soroban</a>.</p>
           <p>Here are several sources for more information:</p>
           <ul>
             <li><a href="https://en.wikipedia.org/wiki/Mental_abacus" target='_blank'>Wikipedia article</a></li>
