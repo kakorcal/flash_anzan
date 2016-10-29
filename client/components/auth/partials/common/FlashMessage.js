@@ -21,7 +21,7 @@ class FlashMessage extends Component{
       if(this.props.messages.length){
         this.props.deleteFlashMessage(this.props.message.id);
       }
-    }, 10000);
+    }, 8000);
     this.setState({delayId});
   }
 

@@ -69,9 +69,11 @@ class Show extends Component{
           <p>Activity Log</p>
         </div>
         <div className='flash-btn-group'>
-          <button className='btn btn-lg flash-btn flash-bg-dark-green'>
-            <Link to='/user/edit' className='nav-link flash-co-cream'>EDIT</Link>
-          </button>
+          <Link to='/user/edit'>
+            <button className='btn btn-lg flash-btn flash-bg-dark-green flash-co-cream'>
+              EDIT
+            </button>
+          </Link>
           <button className='btn btn-lg flash-btn flash-bg-dark-red flash-co-cream'
             onClick={this.handleDeleteUser}
           >DELETE</button>

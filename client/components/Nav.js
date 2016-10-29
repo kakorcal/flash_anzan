@@ -19,25 +19,31 @@ class Nav extends Component{
 
     const guestLinks = (
       <div className='flash-btn-group'>
-        <button className='btn btn-lg flash-btn flash-bg-orange'>
-          <Link to='/auth/login' className='nav-link flash-co-cream'>LOGIN</Link>
-        </button>
-        <button className='btn btn-lg flash-btn flash-bg-orange'>
-          <Link to='/auth/signup' className='nav-link flash-co-cream'>SIGNUP</Link>
-        </button>
+        <Link to='/auth/login'>
+          <button className='btn btn-lg flash-btn flash-bg-orange flash-co-cream'>
+            LOGIN
+          </button>
+        </Link>
+        <Link to='/auth/signup'>
+          <button className='btn btn-lg flash-btn flash-bg-orange flash-co-cream'>
+            SIGNUP
+          </button>
+        </Link>
       </div>
     );
 
     const userLinks = (
       <div className='flash-btn-group'>
-        <button className='btn btn-lg flash-btn flash-bg-orange'>
-          <Link to='/user' className='nav-link flash-co-cream'>PROFILE</Link>
-        </button>
-        <button className='btn btn-lg flash-btn flash-bg-orange'>
-          <a href='#' className='nav-link flash-co-cream' 
-            onClick={this.logout.bind(this)}
-          >LOGOUT</a>
-        </button>
+        <Link to='/user' className='nav-link flash-co-cream'>
+          <button className='btn btn-lg flash-btn flash-bg-orange'>
+            PROFILE
+          </button>
+        </Link>
+        <a href='#' onClick={this.logout.bind(this)}>
+          <button className='btn btn-lg flash-btn flash-bg-orange flash-co-cream'>
+            LOGOUT
+          </button>
+        </a>
       </div>
     );
 

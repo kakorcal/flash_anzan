@@ -11,9 +11,6 @@ class Edit extends Component{
   }
 
   render(){
-    //***************************************************************************
-      // TODO: SWAP BUTTON AND LINK POSITIONS FOR ALL INSTANCES
-    //***************************************************************************
     return (
       <div className='edit'>
         <h1>Profile - Edit</h1>
@@ -25,9 +22,12 @@ class Edit extends Component{
               className='btn btn-lg flash-btn flash-bg-blue flash-co-cream' 
               value='EDIT'
             />
-            <button className='btn btn-lg flash-btn flash-bg-red'>
-              <Link to='/user' className='nav-link flash-co-cream'>BACK</Link>
-            </button>
+
+            <Link to='/user'>
+              <button className='btn btn-lg flash-btn flash-bg-red flash-co-cream'>
+                BACK
+              </button>
+            </Link>
           </div>
         </form>
       </div>
