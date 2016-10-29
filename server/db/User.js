@@ -16,8 +16,8 @@ const UserSchema = mongoose.Schema({
     default: `https://robohash.org/${shortid.generate()}`
   },
   highest_level: {
-    type: Number,
-    default: 1
+    type: String,
+    default: 'N/A'
   },
   create_date:{
     type: Date,

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
 import {setCurrentUser, getCurrentUser} from '../../redux/actions/auth'
@@ -32,6 +33,10 @@ class Show extends Component{
     return (++month) + '/' + day + '/' + year;
   } 
 
+  handleDeleteUser(e){
+
+  }
+
   componentWillMount(){
     this.props.getCurrentUser(this.props.user._id)
       .then(({data}) => {
@@ -64,8 +69,12 @@ class Show extends Component{
           <p>Activity Log</p>
         </div>
         <div className='flash-btn-group'>
-          <button className='btn btn-lg flash-btn flash-bg-dark-green flash-co-cream'>EDIT</button>
-          <button className='btn btn-lg flash-btn flash-bg-dark-red flash-co-cream'>DELETE</button>
+          <button className='btn btn-lg flash-btn flash-bg-dark-green'>
+            <Link to='/user/edit' className='nav-link flash-co-cream'>EDIT</Link>
+          </button>
+          <button className='btn btn-lg flash-btn flash-bg-dark-red flash-co-cream'
+            onClick={this.handleDeleteUser}
+          >DELETE</button>
         </div>     
       </div>
     );

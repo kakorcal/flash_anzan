@@ -26,6 +26,15 @@ $darkred: red;
       text-align: center;
       button {
         margin-left: 5px;
+        .nav-link {
+          &:hover{
+            color: $black;
+            text-decoration: none;
+          }
+          &:focus {
+            color: $cream;
+          }
+        }
       }
     }
   }
@@ -104,18 +113,6 @@ body {
     }
     .flash-btn-group, .description {
       text-align: right;
-    }
-    .flash-btn-group {
-      button {
-        .nav-link {
-          &:hover{
-            color: $black;
-          }
-          &:focus {
-            color: $cream;
-          }
-        }
-      }
     }
     .description {
       position: absolute;
