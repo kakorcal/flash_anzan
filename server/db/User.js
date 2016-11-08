@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import shortid from 'shortid'
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -13,7 +12,7 @@ const UserSchema = mongoose.Schema({
   },
   thumbnail_url: {
     type: String,
-    default: `https://robohash.org/${shortid.generate()}`
+    default: 'http://lorempixel.com/150/150/'
   },
   highest_level: {
     type: String,

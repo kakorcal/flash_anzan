@@ -58,20 +58,34 @@ class SignupForm extends Component{
     if(this.isValid()){
       this.setState({isLoading: true});
       this.props.userSignupRequest(this.state)
-        .then(res=>{
+        .then(res => {
           console.log(res.data);
-          const token = res.data.token;
+          const {token, X_MASHAPE_KEY} = res.data;
+          const newuser = jwt.decode(token);
           localStorage.setItem('jwtToken', token);
           setAuthorizationToken(token);
+          this.props.setCurrentUser(newuser);
+          // TODO: Handle errors on catch
+          this.props.setRoboHashThumbnail(newuser._id, X_MASHAPE_KEY)
+            .then(previousData => {        
+              this.props.addFlashMessage({
+                type: 'success',
+                text: 'You have successfully signed in.'
+              });
+              browserHistory.push('/');
+            })
+            .catch(err => {
+              this.props.addFlashMessage({
+                type: 'success',
+                text: 'You have successfully signed in.'
+              });
+              this.props.addFlashMessage({
+                type: 'error',
+                text: 'Please goto the profile page to update your avatar.'
+              });
+              browserHistory.push('/');
+            });
           
-          this.props.setCurrentUser(jwt.decode(token));
-
-          this.props.addFlashMessage({
-            type: 'success',
-            text: 'You have successfully signed in.'
-          });
-
-          browserHistory.push('/');
         }).catch(err=>{
           const message = err.response.data.error;
           console.log(err.response.data);
@@ -123,6 +137,7 @@ SignupForm.propTypes = {
   userSignupRequest: React.PropTypes.func.isRequired,
   setCurrentUser: React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired,
+  setRoboHashThumbnail: React.PropTypes.func.isRequired,
   isUserExists: React.PropTypes.func.isRequired
 };
 

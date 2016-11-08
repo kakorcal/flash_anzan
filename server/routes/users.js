@@ -3,7 +3,8 @@ import db from '../db/index'
 import commonValidations from '../utils/validations/signup'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import {JWT_SECRET} from '../config/env'
+import axios from 'axios'
+import {JWT_SECRET, X_MASHAPE_KEY} from '../config/env'
 import {isEmpty} from 'lodash'
 
 const router = express.Router();
@@ -42,12 +43,11 @@ router.post('/', (req, res)=>{
           if(err || errors.server) res.status(500).json({error: 'The server is currently down. Please signup at a later time'});
 
           bcrypt.hash(password, salt, (err, password_digest) => {
-
             db.User.create({username, password_digest})
               .then(user => {
                 const {_id, username} = user; 
                 const token = jwt.sign({_id, username}, JWT_SECRET);
-                res.json({success: true, token});
+                res.json({success: true, token, X_MASHAPE_KEY});
               })
               .catch(err => {
                 res.status(500).json({error: 'The server is currently down. Please signup at a later time'})
@@ -64,18 +64,22 @@ router.post('/', (req, res)=>{
 router.get('/:identifier', (req, res) => {
   db.User.findOne({_id: req.params.identifier})
     .select('-password_digest')
-    .then(user => {res.json(user)})
+    .then(user => {
+      res.json(user);
+    })
     .catch(err => {res.status(500).json(err)});
 });
 
 router.put('/:identifier', (req, res) => {
-  db.User.findOneAndUpdate({username: req.params.identifier}, req.body.user)
+  // TODO: Handle Error On Client Side
+  db.User.findOneAndUpdate({_id: req.params.identifier}, req.body.user)
+    .select('-password_digest')
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });
 
 router.delete('/:identifier', (req, res) => {
-  db.User.remove({username: req.params.identifier})
+  db.User.remove({_id: req.params.identifier})
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });

@@ -95,6 +95,12 @@ body {
     .logo {
       float: left;
       text-align: center;
+      a {
+        &:hover {
+          color: $orange;
+          text-decoration: none;
+        };
+      }
       .flash {
         margin: 3px 0;
       }
@@ -129,6 +135,16 @@ body {
           box-shadow: .5px .5px 1px $black;
           width: 100%;
         }
+      }
+    }
+  }
+
+  .edit {
+    .file-group {
+      span {
+        position: relative;
+        top: 3px;
+        left: 13px;
       }
     }
   }
