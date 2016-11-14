@@ -48,6 +48,13 @@ const config = {
       {
         test: /bootstrap-sass\/assets\/javascripts\//,
         loader: 'imports?jQuery=jquery'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg(\?v=\d+\.\d+\.\d+)?)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[name].[ext]',
+          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
       }
     ]
   },

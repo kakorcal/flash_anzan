@@ -59,8 +59,7 @@ export function setRoboHashThumbnail(id, X_MASHAPE_KEY){
       }));
     })
     .catch(err => {
-      debugger;
-      return err; 
+      return err;
     });
   }
 }

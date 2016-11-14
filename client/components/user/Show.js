@@ -4,17 +4,18 @@ import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
 import {setCurrentUser, getCurrentUser} from '../../redux/actions/auth'
 import {addFlashMessage} from '../../redux/actions/flashMessages'
+import dog from '../../images/dog.jpg'
 
 class Show extends Component{
   constructor(props){
     super(props);
     this.state = {
-      username: null,
-      create_date: null,
-      thumbnail_url: null,
-      highest_level: null,
-      win_lose_ratio: null,
-      activity_log: null
+      username: '',
+      create_date: '',
+      thumbnail_url: '',
+      highest_level: '',
+      win_lose_ratio: '',
+      activity_log: ''
     };
   }
 
@@ -43,7 +44,7 @@ class Show extends Component{
       this.props.getCurrentUser(this.props.auth.user._id)
         .then(({data}) => {
           if(!data) this.callFlashMessage();
-          // console.log('DATA', data);
+          // console.log('DATA', data);``
           this.setState(data);
         })
         .catch(err => {
@@ -59,7 +60,7 @@ class Show extends Component{
         <hr/>
         <div className="row user-info">
           <div className="user-info-desc col col-xs-6">
-            <img src={this.state.thumbnail_url} alt="pic"/>
+            <img src={this.state.thumbnail_url || dog} alt="pic"/>
             <p>Username: {this.state.username}</p>
             <p>Joined on: {this.formatDate(this.state.create_date)}</p>
           </div>

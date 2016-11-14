@@ -38,7 +38,6 @@ class Edit extends Component{
 
   onSubmit(e){
     e.preventDefault();
-    debugger;
   }
 
   componentWillMount(){

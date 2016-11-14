@@ -1,4 +1,6 @@
 node_modules
+npm-debug.log
 todos.txt
+notes.txt
 .env
 

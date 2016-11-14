@@ -67,7 +67,7 @@ class SignupForm extends Component{
           this.props.setCurrentUser(newuser);
           // TODO: Handle errors on catch
           this.props.setRoboHashThumbnail(newuser._id, X_MASHAPE_KEY)
-            .then(previousData => {        
+            .then(previousData => {
               this.props.addFlashMessage({
                 type: 'success',
                 text: 'You have successfully signed in.'

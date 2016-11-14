@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
   },
   thumbnail_url: {
     type: String,
-    default: 'http://lorempixel.com/150/150/'
+    default: ''
   },
   highest_level: {
     type: String,
