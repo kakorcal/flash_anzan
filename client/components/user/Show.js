@@ -44,7 +44,8 @@ class Show extends Component{
       this.props.getCurrentUser(this.props.auth.user._id)
         .then(({data}) => {
           if(!data) this.callFlashMessage();
-          // console.log('DATA', data);``
+          // console.log('DATA', data);
+          if(!data.thumbnail_url) data.thumbnail_url = dog;
           this.setState(data);
         })
         .catch(err => {
@@ -60,7 +61,7 @@ class Show extends Component{
         <hr/>
         <div className="row user-info">
           <div className="user-info-desc col col-xs-6">
-            <img src={this.state.thumbnail_url || dog} alt="pic"/>
+            <img src={this.state.thumbnail_url} alt="pic"/>
             <p>Username: {this.state.username}</p>
             <p>Joined on: {this.formatDate(this.state.create_date)}</p>
           </div>
