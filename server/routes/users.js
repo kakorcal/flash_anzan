@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import axios from 'axios'
 import {JWT_SECRET, X_MASHAPE_KEY} from '../config/env'
 import {isEmpty} from 'lodash'
+import authenticate from '../utils/authenticate'
 
 const router = express.Router();
 
@@ -61,7 +62,7 @@ router.post('/', (req, res)=>{
 });
 
 // TODO: Add authorization middleware for each end point
-router.get('/:identifier', (req, res) => {
+router.get('/:identifier', authenticate, (req, res) => {
   db.User.findOne({_id: req.params.identifier})
     .select('-password_digest')
     .then(user => {
@@ -70,7 +71,7 @@ router.get('/:identifier', (req, res) => {
     .catch(err => {res.status(500).json(err)});
 });
 
-router.put('/:identifier', (req, res) => {
+router.put('/:identifier', authenticate, (req, res) => {
   // TODO: Handle Error On Client Side
   db.User.findOneAndUpdate({_id: req.params.identifier}, req.body.user)
     .select('-password_digest')
@@ -78,8 +79,9 @@ router.put('/:identifier', (req, res) => {
     .catch(err => {res.status(500).json(err)});
 });
 
-router.delete('/:identifier', (req, res) => {
+router.delete('/:identifier', authenticate, (req, res) => {
   db.User.remove({_id: req.params.identifier})
+    .select('-password_digest')
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });
