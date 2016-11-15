@@ -96,7 +96,7 @@ body {
       float: left;
       text-align: center;
       a {
-        &:hover {
+        &:hover, &:focus {
           color: $orange;
           text-decoration: none;
         };
@@ -129,11 +129,13 @@ body {
       zoom: 1;
       width: 100%;
 
-      &-desc {
+      &-img {
         img {
           margin-bottom: 20px;
           box-shadow: .5px .5px 1px $black;
           width: 100%;
+          max-width: 120px;
+          border-radius: 4px;
         }
       }
     }
@@ -243,10 +245,10 @@ body {
         input {
           text-align: center;
           background: $black;
-          font-size: 70px;
           border: 0;
           border-bottom: 1px solid $white;
-          width: 300px;
+          font-size: 62px;
+          width: 250px;
           &:focus {
             outline: none;  
           }

@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
   },
   highest_level: {
     type: String,
-    default: 'N/A'
+    default: '0'
   },
   create_date:{
     type: Date,
@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema({
   },
   win_lose_ratio: {
     type: Number,
-    default: -1
+    default: 0
   },
   activity_log: {
     type: Object
