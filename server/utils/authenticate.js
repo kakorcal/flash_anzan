@@ -16,13 +16,13 @@ export default (req, res, next) => {
         res.status(401).json({error: 'Failed to authenticate'});
       }else{
         // Check if user exists
-        db.User.findOne({username: data.username})
+        db.User.findOne({_id: req.params.identifier})
           .select('-password_digest')
           .then(user => {
             if(!user){
               res.status(404).json({error: 'No such user'});
             }else{
-              req.currentUser = user;
+              // req.currentUser = user;
             }
             next();
           })

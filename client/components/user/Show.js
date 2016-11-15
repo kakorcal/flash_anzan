@@ -75,10 +75,10 @@ class Show extends Component{
         <h1>Profile</h1>
         <hr/>
         <div className="row user-info">
-          <div className="user-info-img col col-xs-4">
+          <div className="user-info-img col col-xs-5">
             <img src={this.state.thumbnail_url} alt="pic"/>
           </div>
-          <div className="user-info-piechart col col-xs-8">
+          <div className="user-info-piechart col col-xs-7">
             <p>Win Lose Ratio: {`${this.state.win_lose_ratio}%`}</p>
             <p>Highest Level: {this.state.highest_level}</p>
           </div>
