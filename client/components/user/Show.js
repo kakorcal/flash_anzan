@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
 import {setCurrentUser, getCurrentUser, deleteCurrentUser, logout} from '../../redux/actions/auth'
 import {addFlashMessage} from '../../redux/actions/flashMessages'
 import dog from '../../images/default/dog.jpg'
+import DeletePrompt from './partials/DeletePrompt'
 
 class Show extends Component{
   constructor(props){
@@ -15,10 +17,13 @@ class Show extends Component{
       thumbnail_url: '',
       highest_level: '',
       win_lose_ratio: '',
-      activity_log: ''
+      activity_log: '',
+      openPrompt: false
     };
 
+    this.handleOpenPrompt = this.handleOpenPrompt.bind(this);
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
+    this.handleDeleteCancel = this.handleDeleteCancel.bind(this);
   }
 
   callFlashMessage(){
@@ -37,7 +42,11 @@ class Show extends Component{
     return (++month) + '/' + day + '/' + year;
   } 
 
-  handleDeleteUser(e){
+  handleOpenPrompt(e){
+    this.setState({openPrompt: true});
+  }
+
+  handleDeleteUser(){
     this.props.deleteCurrentUser(this.props.auth.user._id)
       .then(() => {
         this.props.logout();
@@ -52,6 +61,10 @@ class Show extends Component{
           text: 'Server is currently down. Please try at another time.'
         });
       });
+  }
+
+  handleDeleteCancel(){
+    this.setState({openPrompt: false});
   }
 
   componentWillMount(){
@@ -72,6 +85,7 @@ class Show extends Component{
   render(){
     return (
       <div className='show'>
+        {this.state.openPrompt && <DeletePrompt handleDeleteUser={this.handleDeleteUser} handleDeleteCancel={this.handleDeleteCancel}/>}
         <h1>Profile</h1>
         <hr/>
         <div className="row user-info">
@@ -100,7 +114,7 @@ class Show extends Component{
             </Link>
           */}
           <button className='btn btn-lg flash-btn flash-bg-red flash-co-cream'
-            onClick={this.handleDeleteUser}
+            onClick={this.handleOpenPrompt}
           >DELETE ACCOUNT</button>
         </div>     
       </div>

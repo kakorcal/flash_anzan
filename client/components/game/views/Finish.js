@@ -63,6 +63,13 @@ class Finish extends Component{
     return input;
   }
 
+  componentWillMount(){
+    // log the result to db if they are authenticated
+    if(this.props.auth.isAuthenticated){
+      
+    }
+  }
+
   render(){
     const playerAnswer = this.adjustUserInput(this.props.game.playerAnswer);
     return (
@@ -98,7 +105,8 @@ Finish.propTypes = {
 function mapStateToProps(state){
   return {
     levels: state.levels,
-    game: state.game
+    game: state.game,
+    auth: state.auth
   }
 }
 

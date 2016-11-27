@@ -67,10 +67,43 @@ $darkred: red;
 
 @include fontFace('ClearSans-Bold', 'fonts/clear_sans/ClearSans-Bold');
 
+html, body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 body {
   background: $white;
   color: $black;
   font-family: 'ClearSans-Bold';
+}
+
+.overlay {
+  opacity: .5;
+  background: #000;
+  z-index: 3000;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.delete-prompt {
+  position: absolute;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: $white;
+  box-shadow: .5px .5px 1px $black;
+  border-radius: 4px;
+  z-index: 4000;
+  padding: 30px;
+  h3 {
+    margin: 0 0 10px 0;
+  }
 }
 
 .main-panel {
@@ -78,7 +111,7 @@ body {
   padding: 0 15px;
   max-width: 530px;
   width: 100%;
-  margin-top: 15px;
+  padding-top: 15px;
   
   .top-nav {
     display: table;
