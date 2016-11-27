@@ -16,7 +16,6 @@ import jwt from 'jsonwebtoken'
   form validations: 
     do server side validation first before client
     if valid, dispatch thunk action and handle response
-
 */
 
 class LoginForm extends Component{

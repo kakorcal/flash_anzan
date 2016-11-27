@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
 import {setCurrentUser, getCurrentUser, deleteCurrentUser, logout} from '../../redux/actions/auth'
 import {addFlashMessage} from '../../redux/actions/flashMessages'
-import dog from '../../images/dog.jpg'
+import dog from '../../images/default/dog.jpg'
 
 class Show extends Component{
   constructor(props){
@@ -75,10 +75,10 @@ class Show extends Component{
         <h1>Profile</h1>
         <hr/>
         <div className="row user-info">
-          <div className="user-info-img col col-xs-5">
+          <div className="user-info-img col col-xs-4">
             <img src={this.state.thumbnail_url} alt="pic"/>
           </div>
-          <div className="user-info-piechart col col-xs-7">
+          <div className="user-info-piechart col col-xs-8">
             <p>Win Lose Ratio: {`${this.state.win_lose_ratio}%`}</p>
             <p>Highest Level: {this.state.highest_level}</p>
           </div>
@@ -91,14 +91,17 @@ class Show extends Component{
           <p>Activity Log</p>
         </div>
         <div className='flash-btn-group'>
-          <Link to='/user/edit'>
-            <button className='btn btn-lg flash-btn flash-bg-green flash-co-cream'>
-              EDIT
-            </button>
-          </Link>
+          {/*
+            TODO: Enable edit feature
+            <Link to='/user/edit'>
+              <button className='btn btn-lg flash-btn flash-bg-green flash-co-cream'>
+                EDIT
+              </button>
+            </Link>
+          */}
           <button className='btn btn-lg flash-btn flash-bg-red flash-co-cream'
             onClick={this.handleDeleteUser}
-          >DELETE</button>
+          >DELETE ACCOUNT</button>
         </div>     
       </div>
     );

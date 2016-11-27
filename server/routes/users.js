@@ -1,6 +1,7 @@
 import express from 'express'
 import db from '../db/index'
-import commonValidations from '../utils/validations/signup'
+import signupValidations from '../utils/validations/signup'
+import editValidations from '../utils/validations/edit'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
@@ -35,7 +36,7 @@ function validateInput(data, otherValidations){
 }
 
 router.post('/', (req, res)=>{
-  validateInput(req.body, commonValidations)
+  validateInput(req.body, signupValidations)
     .then(({errors, isValid}) => {
       if(isValid){
         const {username, password} = req.body;
@@ -71,7 +72,6 @@ router.get('/:identifier', authenticate, (req, res) => {
 });
 
 router.put('/:identifier', authenticate, (req, res) => {
-  // TODO: Handle Error On Client Side
   db.User.findOneAndUpdate({_id: req.params.identifier}, req.body.user)
     .select('-password_digest')
     .then(user => {res.json(user)})
@@ -84,5 +84,18 @@ router.delete('/:identifier', authenticate, (req, res) => {
     .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });
+
+/*
+  router.put('/:identifier/upload', authenticate, (req, res) => {
+    // do a put request to /:identifier and then another request to upload the file
+    // save the filename as string in db
+    // upload file to client/images
+
+    // db.User.findOneAndUpdate({_id: req.params.identifier}, req.body.user)
+    //   .select('-password_digest')
+    //   .then(user => {res.json(user)})
+    //   .catch(err => {res.status(500).json(err)});
+  });
+*/
 
 export default router

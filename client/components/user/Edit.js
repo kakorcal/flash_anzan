@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import {Link, browserHistory} from 'react-router'
+import validator from 'validator'
+import {isEmpty} from 'lodash'
 import requireAuth from '../../utils/requireAuth'
-import {setCurrentUser, getCurrentUser} from '../../redux/actions/auth'
+import {setCurrentUser, getCurrentUser, editCurrentUser} from '../../redux/actions/auth'
 import {addFlashMessage} from '../../redux/actions/flashMessages'
 import TextFieldGroup from '../auth/partials/common/TextFieldGroup'
 
@@ -13,19 +15,16 @@ class Edit extends Component{
     this.state = {
       username: this.props.auth.user.username,
       thumbnail_url: '',
+      initialProfile: {
+        username: this.props.auth.user.username,
+        thumbnail_url: ''
+      },
       errors: {},
       isLoading: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  callFlashMessage(){
-    this.props.addFlashMessage({
-      type: 'error',
-      text: 'Failed to load profile information. Please try at another time.'
-    });    
   }
 
   onChange(e){
@@ -38,18 +37,50 @@ class Edit extends Component{
 
   onSubmit(e){
     e.preventDefault();
+    const {username, thumbnail_url, errors} = this.state;
+    this.setState({isLoading: true});
+      
+    // case 1: initial profile 
+    // if(validator.isEmpty(username)) errors.username = '';
+
+    this.props.editCurrentUser(this.props.auth.user._id, {
+      user: {username, thumbnail_url}
+    })
+      .then(() => {
+        this.props.addFlashMessage({
+          type: 'success',
+          text: 'Your profile has been updated.'
+        });
+
+        browserHistory.push('/user');
+      })
+      .catch(err => {
+        this.props.addFlashMessage({
+          type: 'error',
+          text: 'Server is down. Please try at another time.'
+        });
+      });
   }
 
   componentWillMount(){
     if(this.props.auth.isAuthenticated){
       this.props.getCurrentUser(this.props.auth.user._id)
         .then(({data}) => {
-          if(!data) this.callFlashMessage();
-          const {thumbnail_url} = data;
-          this.setState({thumbnail_url});
+          if(!data) {
+            this.props.addFlashMessage({
+              type: 'error',
+              text: 'Failed to load profile information. Please try at another time.'
+            });              
+          }else{
+            const {thumbnail_url} = data;
+            this.setState({thumbnail_url});
+          }
         })
         .catch(err => {
-          this.callFlashMessage();
+          this.props.addFlashMessage({
+            type: 'error',
+            text: 'Failed to load profile information. Please try at another time.'
+          });  
         });
     }
   }
@@ -113,6 +144,7 @@ class Edit extends Component{
 Edit.propTypes = {
   setCurrentUser: React.PropTypes.func.isRequired,
   getCurrentUser: React.PropTypes.func.isRequired,
+  editCurrentUser: React.PropTypes.func.isRequired,
   addFlashMessage: React.PropTypes.func.isRequired
 };
 
@@ -123,5 +155,5 @@ function mapStateToProps(state){
 }
 
 export default requireAuth(
-  connect(mapStateToProps, {setCurrentUser, getCurrentUser, addFlashMessage})(Edit)
+  connect(mapStateToProps, {setCurrentUser, getCurrentUser, addFlashMessage, editCurrentUser})(Edit)
 )
