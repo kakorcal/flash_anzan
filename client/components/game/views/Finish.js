@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import levels from '../../../config/levels'
 import {connect} from 'react-redux'
 import {updateCurrentLevel} from '../../../redux/actions/levels'
+import {editCurrentUser} from '../../../redux/actions/auth'
 
 class Finish extends Component{  
   constructor(props){
@@ -63,10 +64,33 @@ class Finish extends Component{
     return input;
   }
 
+  formatDate(){
+    let d = new Date();
+    let day = d.getDate();
+    let month = d.getMonth();
+    let year = d.getFullYear();
+    // monthes need to be incremented because its range is 0-11
+    return (++month) + '_' + day + '_' + year;
+  } 
+
   componentWillMount(){
     // log the result to db if they are authenticated
     if(this.props.auth.isAuthenticated){
-      
+      this.props.editCurrentUser(this.props.auth.user._id, {
+        user: {
+          activity_log: {
+            date: this.formatDate(),
+            result: this.props.game.result,
+            current_level: this.state.currentIdx + 1
+          },
+        }
+      })
+      .then(() => {
+        console.log('Result has been recorded');
+      })
+      .catch(err => {
+        console.log('Failed to record results');
+      });
     }
   }
 
@@ -99,7 +123,8 @@ class Finish extends Component{
 }
 
 Finish.propTypes = {
-  updateCurrentLevel: React.PropTypes.func.isRequired
+  updateCurrentLevel: React.PropTypes.func.isRequired,
+  editCurrentUser: React.PropTypes.func.isRequired
 }
 
 function mapStateToProps(state){
@@ -110,4 +135,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps, {updateCurrentLevel})(Finish)
+export default connect(mapStateToProps, {updateCurrentLevel, editCurrentUser})(Finish)

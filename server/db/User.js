@@ -14,20 +14,27 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: ''
   },
-  highest_level: {
-    type: String,
-    default: '0'
-  },
   create_date:{
     type: Date,
     default: Date.now
   },
-  win_lose_ratio: {
+  highest_level: {
+    type: Number,
+    default: 0
+  },
+  total_win: {
+    type: Number,
+    default: 0
+  },
+  total_lose: {
     type: Number,
     default: 0
   },
   activity_log: {
-    type: Object
+    type: Object,
+    default: {
+      foo: 'bar'
+    }
   }
 });
 

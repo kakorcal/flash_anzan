@@ -16,7 +16,8 @@ class Show extends Component{
       create_date: '',
       thumbnail_url: '',
       highest_level: '',
-      win_lose_ratio: '',
+      total_win: '',
+      total_lose: '',
       activity_log: '',
       openPrompt: false
     };
@@ -93,7 +94,8 @@ class Show extends Component{
             <img src={this.state.thumbnail_url} alt="pic"/>
           </div>
           <div className="user-info-piechart col col-xs-8">
-            <p>Win Lose Ratio: {`${this.state.win_lose_ratio}%`}</p>
+            <p>Total Win: {this.state.total_win}</p>
+            <p>Total Lose: {this.state.total_lose}}</p>
             <p>Highest Level: {this.state.highest_level}</p>
           </div>
         </div>        
