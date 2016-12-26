@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
@@ -19,6 +18,9 @@ class Show extends Component{
       total_win: '',
       total_lose: '',
       activity_log: '',
+      total_win_ratio: '',
+      total_lose_ratio: '',
+      total_game_play: '',
       openPrompt: false
     };
 
@@ -42,6 +44,13 @@ class Show extends Component{
     // monthes need to be incremented because its range is 0-11
     return (++month) + '/' + day + '/' + year;
   } 
+
+  formatStat(win, lose){
+    let total_game_play = win + lose;
+    let total_win_ratio = Math.round((win / total_game_play) * 100);
+    let total_lose_ratio = Math.round((lose / total_game_play) * 100);
+    return {total_game_play, total_win_ratio, total_lose_ratio};
+  }
 
   handleOpenPrompt(e){
     this.setState({openPrompt: true});
@@ -74,8 +83,9 @@ class Show extends Component{
         .then(({data}) => {
           if(!data) this.callFlashMessage();
           // console.log('DATA', data);
+          debugger;
           if(!data.thumbnail_url) data.thumbnail_url = dog;
-          this.setState(data);
+          this.setState(data, this.formatStats(data.total_win, data.total_lose));
         })
         .catch(err => {
           this.callFlashMessage();
@@ -94,8 +104,9 @@ class Show extends Component{
             <img src={this.state.thumbnail_url} alt="pic"/>
           </div>
           <div className="user-info-piechart col col-xs-8">
-            <p>Total Win: {this.state.total_win}</p>
-            <p>Total Lose: {this.state.total_lose}}</p>
+            <p>Total Game Play: {this.state.total_game_play}</p>
+            <p>Total Win Ratio: {this.state.total_win_ratio}</p>
+            <p>Total Lose Ratio: {this.state.total_lose_ratio}</p>
             <p>Highest Level: {this.state.highest_level}</p>
           </div>
         </div>        

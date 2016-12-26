@@ -65,9 +65,7 @@ router.post('/', (req, res)=>{
 router.get('/:identifier', authenticate, (req, res) => {
   db.User.findOne({_id: req.params.identifier})
     .select('-password_digest')
-    .then(user => {
-      res.json(user);
-    })
+    .then(user => {res.json(user)})
     .catch(err => {res.status(500).json(err)});
 });
 
