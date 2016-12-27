@@ -21,11 +21,7 @@ class Countdown extends Component{
         <i key={i} className='fa fa-circle fa-3x flash-co-yellow'></i>
       );
     }
-    return (
-      <div className='circles'>
-        {circles}
-      </div>
-    );
+    return (<div className='circles'>{circles}</div>);
   }
 
   startTimer(){

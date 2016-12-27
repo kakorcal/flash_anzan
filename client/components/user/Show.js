@@ -52,6 +52,29 @@ class Show extends Component{
     return {total_game_play, total_win_ratio, total_lose_ratio};
   }
 
+  // underscoreToSlash(str){
+  //   return str.replace(/_/g, '/');
+  // }
+
+  populateActivityLogs(){
+    let logs = [];
+    let activity_log = this.state.activity_log;
+    if(!activity_log) return;
+
+    for(let date in activity_log){
+      logs.push(
+        <li key={date}>
+          <p>Date: {date.replace(/_/g, '/')}</p>
+          <p>Game Play: {activity_log[date].game_play}</p>
+          <p>Wins: {activity_log[date].win}</p>
+          <p>Loses: {activity_log[date].lose}</p>
+        </li>
+      );
+    }
+
+    return (<ul>{logs}</ul>);
+  }
+
   handleOpenPrompt(e){
     this.setState({openPrompt: true});
   }
@@ -78,7 +101,6 @@ class Show extends Component{
   }
 
   componentWillMount(){
-    // let view = this;
     if(this.props.auth.isAuthenticated){
       this.props.getCurrentUser(this.props.auth.user._id)
         .then(({data}) => {
@@ -106,8 +128,8 @@ class Show extends Component{
           </div>
           <div className="user-info-piechart col col-xs-8">
             <p>Total Game Play: {this.state.total_game_play}</p>
-            <p>Total Win Ratio: {this.state.total_win_ratio}</p>
-            <p>Total Lose Ratio: {this.state.total_lose_ratio}</p>
+            <p>Total Win Ratio: {this.state.total_win_ratio}%</p>
+            <p>Total Lose Ratio: {this.state.total_lose_ratio}%</p>
             <p>Highest Level: {this.state.highest_level}</p>
           </div>
         </div>        
@@ -117,6 +139,9 @@ class Show extends Component{
         </div>
         <div className="user-graph">
           <p>Activity Log</p>
+          <div className="user-activity-logs">
+            {this.populateActivityLogs()}
+          </div>
         </div>
         <div className='flash-btn-group'>
           {/*
