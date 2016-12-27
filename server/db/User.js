@@ -32,9 +32,7 @@ const UserSchema = mongoose.Schema({
   },
   activity_log: {
     type: Object,
-    default: {
-      foo: 'bar'
-    }
+    default: {}
   }
 });
 

@@ -79,7 +79,6 @@ router.put('/:identifier', authenticate, (req, res) => {
     db.User.findOne({_id: req.params.identifier})
       .select('-password_digest')
       .then(user => {
-        eval(require('locus'));
         let {activity_log, total_win, total_lose, highest_level} = user;
         if(activity_log[date]){
           stats[date].game_play = activity_log[date].game_play + 1;

@@ -45,7 +45,7 @@ class Show extends Component{
     return (++month) + '/' + day + '/' + year;
   } 
 
-  formatStat(win, lose){
+  formatStats(win, lose){
     let total_game_play = win + lose;
     let total_win_ratio = Math.round((win / total_game_play) * 100);
     let total_lose_ratio = Math.round((lose / total_game_play) * 100);
@@ -78,14 +78,15 @@ class Show extends Component{
   }
 
   componentWillMount(){
+    // let view = this;
     if(this.props.auth.isAuthenticated){
       this.props.getCurrentUser(this.props.auth.user._id)
         .then(({data}) => {
           if(!data) this.callFlashMessage();
-          // console.log('DATA', data);
-          debugger;
           if(!data.thumbnail_url) data.thumbnail_url = dog;
-          this.setState(data, this.formatStats(data.total_win, data.total_lose));
+          this.setState(
+            Object.assign({}, data, this.formatStats(data.total_win, data.total_lose))
+          );
         })
         .catch(err => {
           this.callFlashMessage();

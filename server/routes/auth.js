@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
             const token = jwt.sign({_id, username}, JWT_SECRET);
             res.json({success: true, token});
           }else{
-            // password not matching
+            // password not matching. unauthorized
             res.status(401).json({form: 'Invalid Credentials.'});
           }
         })
