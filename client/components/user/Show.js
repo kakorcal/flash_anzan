@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import requireAuth from '../../utils/requireAuth'
 import {setCurrentUser, getCurrentUser, deleteCurrentUser, logout} from '../../redux/actions/auth'
 import {addFlashMessage} from '../../redux/actions/flashMessages'
+import RC2 from 'react-chartjs2'
 import dog from '../../images/default/dog.jpg'
 import DeletePrompt from './partials/DeletePrompt'
 
@@ -51,28 +53,77 @@ class Show extends Component{
     let total_lose_ratio = Math.round((lose / total_game_play) * 100);
     return {total_game_play, total_win_ratio, total_lose_ratio};
   }
-
-  // underscoreToSlash(str){
-  //   return str.replace(/_/g, '/');
-  // }
-
+  
   populateActivityLogs(){
-    let logs = [];
-    let activity_log = this.state.activity_log;
-    if(!activity_log) return;
+    if(!this.state.activity_log) return;
+    let chartData = this.setChartData(this.state.activity_log);
+    let chartOptions = this.setChartOptions(this.state.activity_log);
+    
+    return <RC2 ref='lineChart' data={chartData} options={chartOptions} type='line'/>;    
+  }
+  
+  setChartData(activity_log){
+    let data = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Game Play',
+          // Set to 0 to draw straightlines
+          lineTension: 0,
+          // color below line
+          backgroundColor: 'rgba(101,187,205,0.2)',
+          // line configs
+          borderWidth: 2,
+          borderColor: 'rgba(75,192,192,1)',
+          // point configs
+          pointBorderWidth: 1,
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointRadius: 5,
+          pointHitRadius: 20,
+          // point hover configs
+          pointHoverBorderColor: '#fff',
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverRadius: 6,
+          // data points
+          data: []
+        }
+      ]
+    };
 
     for(let date in activity_log){
-      logs.push(
-        <li key={date}>
-          <p>Date: {date.replace(/_/g, '/')}</p>
-          <p>Game Play: {activity_log[date].game_play}</p>
-          <p>Wins: {activity_log[date].win}</p>
-          <p>Loses: {activity_log[date].lose}</p>
-        </li>
-      );
+      data.labels.push(date.replace(/_/g, '/'));
+      data.datasets[0].data.push(activity_log[date].game_play);
     }
+    
+    return data;
+  }
 
-    return (<ul>{logs}</ul>);
+  setChartOptions(activity_log){
+    return {
+      responsive: true,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        displayColors: false,
+        callbacks: {
+          afterBody: (tooltipItem, data) => {
+            // add win and lose info after body text
+            let date = tooltipItem[0].xLabel;
+            let {win, lose} = activity_log[date.replace(/\//g, '_')];
+            return `Win: ${win} \n Lose: ${lose}`;
+          }
+        }
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    };
   }
 
   handleOpenPrompt(e){
@@ -114,6 +165,12 @@ class Show extends Component{
           this.callFlashMessage();
         });
     }
+  }
+
+  componentDidMount(){
+    // can update chart here
+    // https://github.com/topdmc/react-chartjs2
+    // http://topdmc.github.io/react-chartjs2/
   }
 
   render(){
