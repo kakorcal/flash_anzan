@@ -38,7 +38,7 @@ class Show extends Component{
     });    
   }
 
-  formatDate(str){
+  formatCreateDate(str){
     let d = new Date(str);
     let day = d.getDate();
     let month = d.getMonth();
@@ -53,15 +53,64 @@ class Show extends Component{
     let total_lose_ratio = Math.round((lose / total_game_play) * 100);
     return {total_game_play, total_win_ratio, total_lose_ratio};
   }
-  
+
+  formatActivityLogs(activityLogObj){
+    let activity_log = this.attachInactiveLogs(activityLogObj);
+    
+    for(let date in activityLogObj){
+      activity_log.push(this.createNewLogEntry(
+        date.replace(/_/g, '/'), 
+        activityLogObj[date].game_play,
+        activityLogObj[date].win,
+        activityLogObj[date].lose,
+      ));
+    }
+
+    return {
+      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0)
+    };
+  }
+
+  attachInactiveLogs(activityLogObj){
+    let inactive_dates = [];
+    let currentDate = new Date();
+
+    for(let date in activityLogObj){
+      recursivelyAttachLogs.call(this, date);
+    }
+
+    return inactive_dates;
+
+    function recursivelyAttachLogs(date){
+      // if next date is not passing current moment and is not in activity log, keep attaching
+      let nextDate = new Date();
+      let nextDateStr = '';
+      let parts = date.split('_');
+      nextDate.setFullYear(parts[2], parts[0]-1, parts[1]); // year, month (0-based), day
+      nextDate.setTime(nextDate.getTime() + 86400000);
+      nextDateStr = `${nextDate.getMonth()+1}_${nextDate.getDate()}_${nextDate.getFullYear()}`;
+
+      if(activityLogObj[nextDateStr] === undefined && currentDate - nextDate > 0){
+        // attach date to array and iterate again
+        inactive_dates.push(this.createNewLogEntry(nextDateStr.replace(/_/g, '/')));
+        return recursivelyAttachLogs(nextDateStr);
+      }else{
+        return;
+      }
+    }
+  }
+
+  createNewLogEntry(date, game_play=0, win=0, lose=0){
+    return {date, game_play, win, lose};
+  }
+
   populateActivityLogs(){
     if(!this.state.activity_log) return;
     let chartData = this.setChartData(this.state.activity_log);
     let chartOptions = this.setChartOptions(this.state.activity_log);
-    
     return <RC2 ref='lineChart' data={chartData} options={chartOptions} type='line'/>;    
   }
-  
+    
   setChartData(activity_log){
     let data = {
       labels: [],
@@ -91,10 +140,10 @@ class Show extends Component{
       ]
     };
 
-    for(let date in activity_log){
-      data.labels.push(date.replace(/_/g, '/'));
-      data.datasets[0].data.push(activity_log[date].game_play);
-    }
+    activity_log.forEach((curr) => {
+      data.labels.push(curr.date);
+      data.datasets[0].data.push(curr.game_play);
+    });
     
     return data;
   }
@@ -111,7 +160,7 @@ class Show extends Component{
           afterBody: (tooltipItem, data) => {
             // add win and lose info after body text
             let date = tooltipItem[0].xLabel;
-            let {win, lose} = activity_log[date.replace(/\//g, '_')];
+            let {win, lose} = activity_log.find(curr => curr.date === date);
             return `Win: ${win} \n Lose: ${lose}`;
           }
         }
@@ -119,7 +168,8 @@ class Show extends Component{
       scales: {
         yAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            stepSize: 1
           }
         }]
       }
@@ -158,7 +208,7 @@ class Show extends Component{
           if(!data) this.callFlashMessage();
           if(!data.thumbnail_url) data.thumbnail_url = dog;
           this.setState(
-            Object.assign({}, data, this.formatStats(data.total_win, data.total_lose))
+            Object.assign({}, data, this.formatActivityLogs(data.activity_log), this.formatStats(data.total_win, data.total_lose))
           );
         })
         .catch(err => {
@@ -192,14 +242,16 @@ class Show extends Component{
         </div>        
         <div className="user-info-desc">
           <p>Username: {this.state.username}</p>
-          <p>Joined on: {this.formatDate(this.state.create_date)}</p>
+          <p>Joined on: {this.formatCreateDate(this.state.create_date)}</p>
         </div>
+        <hr/>
         <div className="user-graph">
-          <p>Activity Log</p>
+          <p>Activity Log:</p>
           <div className="user-activity-logs">
             {this.populateActivityLogs()}
           </div>
         </div>
+        <hr/>
         <div className='flash-btn-group'>
           {/*
             TODO: Enable edit feature
