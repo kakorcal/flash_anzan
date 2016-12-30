@@ -168,8 +168,29 @@ body {
           margin-bottom: 20px;
           box-shadow: .5px .5px 1px $black;
           width: 100%;
-          max-width: 120px;
+          // max-width: 120px;
           border-radius: 4px;
+        }
+      }
+
+      &-doughnut-chart {
+        position: relative;
+        p {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          text-align: center;
+          transform: translateY(-50%);
+          font-size: 25px;
+          pointer-events: none;
+        }
+      }
+
+      &-desc {
+        p:last-of-type {
+          margin: 0;
         }
       }
     }

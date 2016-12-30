@@ -47,12 +47,12 @@ class Show extends Component{
     return (++month) + '/' + day + '/' + year;
   } 
 
-  formatStats(win, lose){
-    let total_game_play = win + lose;
-    let total_win_ratio = Math.round((win / total_game_play) * 100);
-    let total_lose_ratio = Math.round((lose / total_game_play) * 100);
-    return {total_game_play, total_win_ratio, total_lose_ratio};
-  }
+  // formatStats(win, lose){
+  //   let total_game_play = win + lose;
+  //   let total_win_ratio = Math.round((win / total_game_play) * 100);
+  //   let total_lose_ratio = Math.round((lose / total_game_play) * 100);
+  //   return {total_game_play, total_win_ratio, total_lose_ratio};
+  // }
 
   formatLogDate(str){
     return str.replace(/_/g, '/').replace(/\d{4}/, '') + str.substr(str.length - 2);
@@ -80,7 +80,7 @@ class Show extends Component{
       labels: ['Total Win', 'Total Lose'],
       datasets: [
         {
-          data: [this.state.total_win_ratio, this.state.total_lose_ratio],
+          data: [this.state.total_win, this.state.total_lose],
           backgroundColor: ['#bdec8e', '#ff8d6c'],
           // hoverBackgroundColor: []
         }]
@@ -231,7 +231,7 @@ class Show extends Component{
           if(!data) this.callFlashMessage();
           if(!data.thumbnail_url) data.thumbnail_url = dog;
           this.setState(
-            Object.assign({}, data, this.formatActivityLogs(data.activity_log), this.formatStats(data.total_win, data.total_lose))
+            Object.assign({}, data, this.formatActivityLogs(data.activity_log)) //, this.formatStats(data.total_win, data.total_lose))
           );
         })
         .catch(err => {
@@ -253,23 +253,21 @@ class Show extends Component{
         <h1>Profile</h1>
         <hr/>
         <div className="row user-info">
-          <div className="user-info-img col col-xs-4">
+          <div className="user-info-img col col-xs-6">
             <img src={this.state.thumbnail_url} alt="pic"/>
           </div>
-          <div className="user-info-piechart col col-xs-8">
-            <p>Total Game Play: {this.state.total_game_play}</p>
-            <p>Total Win Ratio: {this.state.total_win_ratio}%</p>
-            <p>Total Lose Ratio: {this.state.total_lose_ratio}%</p>
-            <div>
-              {this.populateDoughnutChart()}
-            </div>
+          <div className="user-info-doughnut-chart col col-xs-6">
+            {this.populateDoughnutChart()}
+            <p>Lv: {this.state.highest_level}</p>
+          </div>
+          <div className="user-info-desc col col-xs-12">
+            <p>Username: {this.state.username}</p>
+            <p>Joined on: {this.formatCreateDate(this.state.create_date)}</p>
+            {/*<p>Total Game Play: {this.state.total_game_play}</p>*/}
+            {/*<p>Total Win Ratio: {this.state.total_win_ratio}%</p>*/}
+            {/*<p>Total Lose Ratio: {this.state.total_lose_ratio}%</p>*/}
           </div>
         </div>        
-        <div className="user-info-desc">
-          <p>Username: {this.state.username}</p>
-          <p>Joined on: {this.formatCreateDate(this.state.create_date)}</p>
-          <p>Highest Level: {this.state.highest_level}</p>
-        </div>
         <hr/>
         <div className="user-graph">
           <p>Activity Log:</p>
