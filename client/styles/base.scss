@@ -183,7 +183,7 @@ body {
           margin: 0 auto;
           text-align: center;
           transform: translateY(-50%);
-          font-size: 25px;
+          font-size: 22px;
           pointer-events: none;
         }
       }
@@ -337,7 +337,7 @@ body {
   .main-panel {
     .top-nav {
       .description h5 {
-        font-size: 12px;
+        font-size: 10px;
       }        
     }
 
@@ -347,8 +347,54 @@ body {
           h2 {
             font-size: 27px;
           }
+          span:nth-child(2){
+            padding-left: 11px;
+          }
           span:last-of-type {
             padding: 0;
+          }
+        }
+      }
+    }  
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .main-panel {
+    .top-nav {
+      .logo a h1 {
+        font-size: 24px;
+      }
+      .flash-btn-group {
+        a .btn-lg {
+          padding: 6px 12px;
+          font-size: 14px;
+          line-height: 1.42857;
+          border-radius: 4px;
+        }
+      }
+      .description h5 {
+        font-size: 10px;
+      }        
+    }
+
+    .game-container {
+      .pregame {
+        .pregame-settings {
+          h2 {
+            font-size: 22px;
+          }
+          h3 {
+            font-size: 18px;
+          }
+          span:nth-child(2){
+            padding-left: 8px;
+          }
+          span:last-of-type {
+            padding: 0;
+            button i {
+              font-size: 20px;
+            }
           }
         }
       }
