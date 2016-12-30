@@ -336,8 +336,11 @@ body {
 @media screen and (max-width: 415px) {
   .main-panel {
     .top-nav {
+      .logo a h1 {
+        font-size: 28px;
+      }
       .description h5 {
-        font-size: 10px;
+        font-size: 12px;
       }        
     }
 
@@ -346,12 +349,16 @@ body {
         .pregame-settings {
           h2 {
             font-size: 27px;
-          }
-          span:nth-child(2){
-            padding-left: 11px;
-          }
-          span:last-of-type {
-            padding: 0;
+            span:first-of-type {
+              left: 25px;
+            }
+            // span:nth-child(2){
+            //   padding-left: 11px;
+            // }
+            span:last-of-type {
+              right: 12px;
+              padding: 0;
+            }
           }
         }
       }
@@ -359,7 +366,7 @@ body {
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 360px) {
   .main-panel {
     .top-nav {
       .logo a h1 {
@@ -383,18 +390,17 @@ body {
         .pregame-settings {
           h2 {
             font-size: 22px;
+            // span:nth-child(2){
+            //   padding-left: 8px;
+            // }
+            span:last-of-type {
+              button i {
+                font-size: 20px;
+              }
+            }
           }
           h3 {
             font-size: 18px;
-          }
-          span:nth-child(2){
-            padding-left: 8px;
-          }
-          span:last-of-type {
-            padding: 0;
-            button i {
-              font-size: 20px;
-            }
           }
         }
       }

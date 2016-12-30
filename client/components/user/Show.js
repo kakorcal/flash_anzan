@@ -71,7 +71,7 @@ class Show extends Component{
     }
 
     return {
-      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0).slice(-10)
+      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0).slice(-7)
     };
   }
 
