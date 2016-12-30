@@ -332,3 +332,26 @@ body {
     }
   }
 }
+
+@media screen and (max-width: 415px) {
+  .main-panel {
+    .top-nav {
+      .description h5 {
+        font-size: 12px;
+      }        
+    }
+
+    .game-container {
+      .pregame {
+        .pregame-settings {
+          h2 {
+            font-size: 27px;
+          }
+          span:last-of-type {
+            padding: 0;
+          }
+        }
+      }
+    }  
+  }
+}
