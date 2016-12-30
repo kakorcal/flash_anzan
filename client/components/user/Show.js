@@ -54,12 +54,16 @@ class Show extends Component{
     return {total_game_play, total_win_ratio, total_lose_ratio};
   }
 
+  formatLogDate(str){
+    return str.replace(/_/g, '/').replace(/\d{4}/, '') + str.substr(str.length - 2);
+  }
+
   formatActivityLogs(activityLogObj){
     let activity_log = this.attachInactiveLogs(activityLogObj);
     
     for(let date in activityLogObj){
       activity_log.push(this.createNewLogEntry(
-        date.replace(/_/g, '/'), 
+        this.formatLogDate(date), 
         activityLogObj[date].game_play,
         activityLogObj[date].win,
         activityLogObj[date].lose,
@@ -67,8 +71,29 @@ class Show extends Component{
     }
 
     return {
-      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0)
+      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0).slice(-10)
     };
+  }
+
+  populateDoughnutChart(){
+    let chartData = {
+      labels: ['Total Win', 'Total Lose'],
+      datasets: [
+        {
+          data: [this.state.total_win_ratio, this.state.total_lose_ratio],
+          backgroundColor: ['#bdec8e', '#ff8d6c'],
+          // hoverBackgroundColor: []
+        }]
+    };
+
+    let chartOptions = {
+      responsive: true,
+      legend: {
+        display: false
+      }
+    };
+
+    return <RC2 ref='doughnutChart' data={chartData} options={chartOptions} type='doughnut'/>;    
   }
 
   attachInactiveLogs(activityLogObj){
@@ -82,7 +107,6 @@ class Show extends Component{
     return inactive_dates;
 
     function recursivelyAttachLogs(date){
-      // if next date is not passing current moment and is not in activity log, keep attaching
       let nextDate = new Date();
       let nextDateStr = '';
       let parts = date.split('_');
@@ -90,12 +114,11 @@ class Show extends Component{
       nextDate.setTime(nextDate.getTime() + 86400000);
       nextDateStr = `${nextDate.getMonth()+1}_${nextDate.getDate()}_${nextDate.getFullYear()}`;
 
-      if(activityLogObj[nextDateStr] === undefined && currentDate - nextDate > 0){
+      // if next date is not passing current moment and is not in activity log, keep attaching
+      if(activityLogObj[nextDateStr] === undefined && currentDate - nextDate >= 0){
         // attach date to array and iterate again
-        inactive_dates.push(this.createNewLogEntry(nextDateStr.replace(/_/g, '/')));
+        inactive_dates.push(this.createNewLogEntry(this.formatLogDate(nextDateStr)));
         return recursivelyAttachLogs(nextDateStr);
-      }else{
-        return;
       }
     }
   }
@@ -237,12 +260,15 @@ class Show extends Component{
             <p>Total Game Play: {this.state.total_game_play}</p>
             <p>Total Win Ratio: {this.state.total_win_ratio}%</p>
             <p>Total Lose Ratio: {this.state.total_lose_ratio}%</p>
-            <p>Highest Level: {this.state.highest_level}</p>
+            <div>
+              {this.populateDoughnutChart()}
+            </div>
           </div>
         </div>        
         <div className="user-info-desc">
           <p>Username: {this.state.username}</p>
           <p>Joined on: {this.formatCreateDate(this.state.create_date)}</p>
+          <p>Highest Level: {this.state.highest_level}</p>
         </div>
         <hr/>
         <div className="user-graph">
