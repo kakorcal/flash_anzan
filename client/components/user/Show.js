@@ -76,11 +76,19 @@ class Show extends Component{
   }
 
   populateDoughnutChart(){
+    let win = this.state.total_win;
+    let lose = this.state.total_lose;
+    let hasPlayed = true;
+    if(win === 0 && lose === 0) {
+      win = 1;
+      hasPlayed = false;
+    }
+
     let chartData = {
       labels: ['Total Win', 'Total Lose'],
       datasets: [
         {
-          data: [this.state.total_win, this.state.total_lose],
+          data: [win, lose],
           backgroundColor: ['#bdec8e', '#ff8d6c'],
           // hoverBackgroundColor: []
         }]
@@ -90,6 +98,9 @@ class Show extends Component{
       responsive: true,
       legend: {
         display: false
+      },
+      tooltips: {
+        enabled: hasPlayed
       }
     };
 
