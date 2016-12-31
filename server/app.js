@@ -40,6 +40,9 @@ if(NODE_ENV === 'development'){
   }));
 
   app.use(hotMiddleware(compiler));
+}else{
+  // the built bundle.js is put in here
+  app.use(express.static('./build'));  
 }
 
 connectdb(DATABASE_URL);
