@@ -8,6 +8,7 @@ import db from './db/index'
 import {PORT, NODE_ENV, DATABASE_URL} from './config/env'
 
 const app = express();
+let templateStr = path.resolve('build/index.html');
 
 if(NODE_ENV === 'development'){
   const webpack = require('webpack');
@@ -15,6 +16,20 @@ if(NODE_ENV === 'development'){
   const devMiddleware = require('webpack-dev-middleware');
   const hotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(devConfig);
+  templateStr = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Flash Anzan</title>
+        <meta charset='utf-8'>
+        <meta content='width=device-width, initial-scale=1' name='viewport'/>
+      </head>
+      <body>
+        <div id='root'></div>
+        <script src='/public/bundle.js'></script>
+      </body>
+    </html>
+  `;
 
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
@@ -34,20 +49,7 @@ app.use('/api/users', routes.users);
 app.use('/api/auth', routes.auth);
 
 app.get('/*', (req, res)=>{
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Flash Anzan</title>
-        <meta charset='utf-8'>
-        <meta content='width=device-width, initial-scale=1' name='viewport'/>
-      </head>
-      <body>
-        <div id='root'></div>
-        <script src='/public/bundle.js'></script>
-      </body>
-    </html>
-  `);
+  res.sendFile(templateStr);
 });
 
 app.listen(PORT, (err)=>{
