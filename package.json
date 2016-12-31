@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --ignore client --exec babel-node ./server/app.js",
     "build": "webpack --config webpack/webpack.prod.config.js",
-    "start": "babel-node ./server/app.js"
+    "start": "NODE_ENV=production babel-node ./server/app.js"
   },
   "repository": {
     "type": "git",
