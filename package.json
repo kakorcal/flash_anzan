@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --ignore client --exec babel-node ./server/app.js",
     "build": "webpack --config webpack/webpack.prod.config.js",
-    "start": "NODE_ENV=production ./node_modules/.bin/babel-node ./server/app.js"
+    "start": "babel-node ./server/app.js"
   },
   "repository": {
     "type": "git",
@@ -61,7 +61,6 @@
   },
   "dependencies": {
     "axios": "^0.14.0",
-    "babel": "^6.5.2",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
