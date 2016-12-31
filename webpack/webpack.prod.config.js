@@ -32,7 +32,10 @@ const config = {
         include: [
           path.resolve('client')
         ],
-        loaders: ['babel']
+        loaders: ['babel'],
+        query: {
+          presets: ['es2015', 'react', 'stage-2']
+        }
       },
       {
         test: /\.scss$/,
