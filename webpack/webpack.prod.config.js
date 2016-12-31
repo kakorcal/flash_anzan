@@ -11,7 +11,7 @@ const validate = require('webpack-validator');
 
 const config = {
   entry: {
-    app: ['babel-polyfill', path.resolve('client')],
+    app: ['babel-polyfill', path.resolve('client', 'index.js')],
     styles: [
       path.resolve('node_modules', 'bootstrap/dist/css', 'bootstrap.css'),      
       path.resolve('node_modules', 'font-awesome/css', 'font-awesome.css'),
