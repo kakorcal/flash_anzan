@@ -11,7 +11,7 @@ const validate = require('webpack-validator');
 
 const config = {
   entry: {
-    app: ['babel-polyfill', path.resolve('client', 'index.js')],
+    app: ['babel-polyfill', path.resolve('client')],
     styles: [
       path.resolve('node_modules', 'bootstrap/dist/css', 'bootstrap.css'),      
       path.resolve('node_modules', 'font-awesome/css', 'font-awesome.css'),
@@ -29,13 +29,8 @@ const config = {
     loaders: [
       {
         test: /\.js$/,
-        include: [
-          path.resolve('client')
-        ],
         loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react', 'stage-2']
-        }
+        include: /client/
       },
       {
         test: /\.scss$/,
