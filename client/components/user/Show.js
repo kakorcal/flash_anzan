@@ -23,6 +23,7 @@ class Show extends Component{
       total_win_ratio: '',
       total_lose_ratio: '',
       total_game_play: '',
+      last_play_date: '',
       openPrompt: false
     };
 
@@ -38,14 +39,14 @@ class Show extends Component{
     });    
   }
 
-  formatCreateDate(str){
-    let d = new Date(str);
-    let day = d.getDate();
-    let month = d.getMonth();
-    let year = d.getFullYear();
-    // monthes need to be incremented because its range is 0-11
-    return (++month) + '/' + day + '/' + year;
-  } 
+  // formatCreateDate(str){
+  //   let d = new Date(str);
+  //   let day = d.getDate();
+  //   let month = d.getMonth();
+  //   let year = d.getFullYear();
+  //   // monthes need to be incremented because its range is 0-11
+  //   return (++month) + '/' + day + '/' + year;
+  // } 
 
   // formatStats(win, lose){
   //   let total_game_play = win + lose;
@@ -54,25 +55,63 @@ class Show extends Component{
   //   return {total_game_play, total_win_ratio, total_lose_ratio};
   // }
 
-  formatLogDate(str){
-    return str.replace(/_/g, '/').replace(/\d{4}/, '') + str.substr(str.length - 2);
+  formatDate(str){
+    let d = new Date(str);
+    let day = d.getDate();
+    let month = d.getMonth();
+    let year = d.getFullYear();
+
+    if(isNaN(day)) {
+      return str.replace(/_/g, '/');
+      // .replace(/\d{4}/, '') + str.substr(str.length - 2);
+    }else{
+      // monthes need to be incremented because its range is 0-11
+      return (++month) + '/' + day + '/' + year;
+    }
   }
 
-  formatActivityLogs(activityLogObj){
-    let activity_log = this.attachInactiveLogs(activityLogObj);
+  // formatActivityLogs(activityLogObj){
+  //   let activity_log = this.attachInactiveLogs(activityLogObj);
     
-    for(let date in activityLogObj){
-      activity_log.push(this.createNewLogEntry(
-        this.formatLogDate(date), 
-        activityLogObj[date].game_play,
-        activityLogObj[date].win,
-        activityLogObj[date].lose,
-      ));
-    }
+  //   for(let date in activityLogObj){
+  //     activity_log.push(this.createNewLogEntry(
+  //       this.formatDateStr(date), 
+  //       activityLogObj[date].game_play,
+  //       activityLogObj[date].win,
+  //       activityLogObj[date].lose,
+  //     ));
+  //   }
 
-    return {
-      activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0).slice(-7)
-    };
+  //   return {
+  //     activity_log: activity_log.sort((a, b) => new Date(b.date) - new Date(a.date) < 0).slice(-7)
+  //   };
+  // }
+
+  formatWeeklyActivityLogs(activityLogObj){
+    let activity_log = generateDateArr.call(this, 7).map((date) => {
+      if(!activityLogObj[date]){
+        return this.createNewLogEntry(this.formatDate(date));
+      }else{
+        return this.createNewLogEntry(
+          this.formatDate(date), 
+          activityLogObj[date].game_play,
+          activityLogObj[date].win,
+          activityLogObj[date].lose,
+        );
+      }
+    });
+
+    return {activity_log};
+
+    function generateDateArr(numberOfDates){
+      let arr = [];
+      let currentDate = new Date();
+      for(let i = 0; i < numberOfDates; i++){
+        arr.push(this.formatDate(currentDate).replace(/\//g, '_'));
+        currentDate.setDate(currentDate.getDate() - 1);
+      }
+      return arr.reverse();
+    }
   }
 
   populateDoughnutChart(){
@@ -107,32 +146,32 @@ class Show extends Component{
     return <RC2 ref='doughnutChart' data={chartData} options={chartOptions} type='doughnut'/>;    
   }
 
-  attachInactiveLogs(activityLogObj){
-    let inactive_dates = [];
-    let currentDate = new Date();
+  // attachInactiveLogs(activityLogObj){
+  //   let inactive_dates = [];
+  //   let currentDate = new Date();
 
-    for(let date in activityLogObj){
-      recursivelyAttachLogs.call(this, date);
-    }
+  //   for(let date in activityLogObj){
+  //     recursivelyAttachLogs.call(this, date);
+  //   }
 
-    return inactive_dates;
+  //   return inactive_dates;
 
-    function recursivelyAttachLogs(date){
-      let nextDate = new Date();
-      let nextDateStr = '';
-      let parts = date.split('_');
-      nextDate.setFullYear(parts[2], parts[0]-1, parts[1]); // year, month (0-based), day
-      nextDate.setTime(nextDate.getTime() + 86400000);
-      nextDateStr = `${nextDate.getMonth()+1}_${nextDate.getDate()}_${nextDate.getFullYear()}`;
+  //   function recursivelyAttachLogs(date){
+  //     let nextDate = new Date();
+  //     let nextDateStr = '';
+  //     let parts = date.split('_');
+  //     nextDate.setFullYear(parts[2], parts[0]-1, parts[1]); // year, month (0-based), day
+  //     nextDate.setTime(nextDate.getTime() + 86400000);
+  //     nextDateStr = `${nextDate.getMonth()+1}_${nextDate.getDate()}_${nextDate.getFullYear()}`;
 
-      // if next date is not passing current moment and is not in activity log, keep attaching
-      if(activityLogObj[nextDateStr] === undefined && currentDate - nextDate >= 0){
-        // attach date to array and iterate again
-        inactive_dates.push(this.createNewLogEntry(this.formatLogDate(nextDateStr)));
-        return recursivelyAttachLogs(nextDateStr);
-      }
-    }
-  }
+  //     // if next date is not passing current moment and is not in activity log, keep attaching
+  //     if(activityLogObj[nextDateStr] === undefined && currentDate - nextDate >= 0){
+  //       // attach date to array and iterate again
+  //       inactive_dates.push(this.createNewLogEntry(this.formatDateStr(nextDateStr)));
+  //       return recursivelyAttachLogs(nextDateStr);
+  //     }
+  //   }
+  // }
 
   createNewLogEntry(date, game_play=0, win=0, lose=0){
     return {date, game_play, win, lose};
@@ -210,6 +249,20 @@ class Show extends Component{
     };
   }
 
+  setLastPlayDate(activityLogObj){
+    let arr = [];
+    let lastDate = '';
+    for(let date in activityLogObj){
+      arr.push(new Date(this.formatDate(date)));
+    }
+
+    lastDate = this.formatDate(arr.sort((a, b) => b - a > 0)[0]);
+
+    return {
+      last_play_date: lastDate
+    };
+  }
+
   handleOpenPrompt(e){
     this.setState({openPrompt: true});
   }
@@ -242,7 +295,10 @@ class Show extends Component{
           if(!data) this.callFlashMessage();
           if(!data.thumbnail_url) data.thumbnail_url = dog;
           this.setState(
-            Object.assign({}, data, this.formatActivityLogs(data.activity_log)) //, this.formatStats(data.total_win, data.total_lose))
+            Object.assign({}, data, 
+              this.setLastPlayDate(data.activity_log), 
+              this.formatWeeklyActivityLogs(data.activity_log)
+            ) //, this.formatStats(data.total_win, data.total_lose))
           );
         })
         .catch(err => {
@@ -273,7 +329,8 @@ class Show extends Component{
           </div>
           <div className="user-info-desc col col-xs-12">
             <p>Username: {this.state.username}</p>
-            <p>Joined on: {this.formatCreateDate(this.state.create_date)}</p>
+            <p>Joined on: {this.formatDate(this.state.create_date)}</p>
+            <p>Last played on: {this.state.last_play_date}</p>
             {/*<p>Total Game Play: {this.state.total_game_play}</p>*/}
             {/*<p>Total Win Ratio: {this.state.total_win_ratio}%</p>*/}
             {/*<p>Total Lose Ratio: {this.state.total_lose_ratio}%</p>*/}
