@@ -91,7 +91,7 @@ router.put('/:identifier', authenticate, (req, res) => {
         }
         total_win = result === 'win' ? total_win + 1 : total_win;
         total_lose = result === 'lose' ? total_lose + 1: total_lose;
-        highest_level = result === 'win' ? current_level : highest_level;
+        highest_level = result === 'win' && current_level > highest_level ? current_level : highest_level;
 
         return {activity_log, stats, total_win, total_lose, highest_level};
       })
