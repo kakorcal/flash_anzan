@@ -17,7 +17,12 @@ const config = {
       path.resolve('node_modules', 'font-awesome/css', 'font-awesome.css'),
       path.resolve('client/styles', 'base.scss')
     ],
-    vendor: ["axios", "classnames", "howler", "jsonwebtoken", "lodash", "react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "shortid", "validator"]
+    react: ["react", "react-chartjs2", "react-dom", "react-redux", "react-router"],
+    redux: ["redux", "redux-logger", "redux-thunk"],
+    axios: ["axios"],
+    howler: ["howler"],
+    utils: ["classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
+    // ["axios", "classnames", "howler", "jsonwebtoken", "lodash", "react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "shortid", "validator"]
   },
   output: {
     publicPath: '/',
@@ -87,13 +92,16 @@ const config = {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
+      },
+      output: {
+        comments: false
       }
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['styles', 'app', 'vendor', 'manifest']
+      names: ['styles', 'app', 'react', 'redux', 'axios', 'howler', 'utils', 'manifest']
     }),
     new CleanWebpackPlugin(['build'], {
       root: process.cwd(),
