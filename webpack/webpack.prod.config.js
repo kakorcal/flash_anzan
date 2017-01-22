@@ -107,14 +107,14 @@ const config = {
       root: process.cwd(),
       verbose: true
     }),
-    // new PurifyCssPlugin({
-    //   basePath: process.cwd(),
-    //   paths: [path.resolve('client')],
-    //   purifyOptions: {
-    //     minify: true,
-    //     info: true
-    //   }
-    // }),
+    new PurifyCssPlugin({
+      basePath: process.cwd(),
+      paths: [path.resolve('client')],
+      purifyOptions: {
+        minify: true,
+        info: true
+      }
+    }),
     new AppCachePlugin({
       exclude: ['.htaccess']
     }),
