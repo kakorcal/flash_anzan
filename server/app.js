@@ -8,7 +8,7 @@ import db from './db/index'
 import {PORT, NODE_ENV, DATABASE_URL} from './config/env'
 
 const app = express();
-let templateStr = path.resolve('build/index.html');
+let template;
 
 if(NODE_ENV === 'development'){
   const webpack = require('webpack');
@@ -16,21 +16,8 @@ if(NODE_ENV === 'development'){
   const devMiddleware = require('webpack-dev-middleware');
   const hotMiddleware = require('webpack-hot-middleware');
   const compiler = webpack(devConfig);
-  templateStr = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Flash Anzan</title>
-        <meta charset='utf-8'>
-        <meta content='width=device-width, initial-scale=1' name='viewport'/>
-      </head>
-      <body>
-        <div id='root'></div>
-        <script src='/public/bundle.js'></script>
-      </body>
-    </html>
-  `;
-
+  template = path.resolve('webpack/dev.template.html');
+  
   app.use(devMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
     stats: {
@@ -41,6 +28,7 @@ if(NODE_ENV === 'development'){
 
   app.use(hotMiddleware(compiler));
 }else{
+  template = path.resolve('build/index.html');
   // the built bundle.js is put in here
   app.use(express.static('./build'));  
 }
@@ -52,7 +40,7 @@ app.use('/api/users', routes.users);
 app.use('/api/auth', routes.auth);
 
 app.get('/*', (req, res)=>{
-  res.sendFile(templateStr);
+  res.sendFile(template);
 });
 
 app.listen(PORT, (err)=>{

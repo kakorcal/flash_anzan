@@ -17,7 +17,7 @@ const config = {
       path.resolve('node_modules', 'font-awesome/css', 'font-awesome.css'),
       path.resolve('client/styles', 'base.scss')
     ],
-    vendor: ['react', 'react-router', 'react-dom', 'redux', 'react-redux']
+    vendor: ["axios", "classnames", "howler", "jsonwebtoken", "lodash", "react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "shortid", "validator"]
   },
   output: {
     publicPath: '/',
@@ -80,7 +80,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve('webpack/template.html'),
+      template: path.resolve('webpack/prod.template.html'),
       filename: 'index.html',
       hash: true
     }),
@@ -93,20 +93,20 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest']
+      names: ['styles', 'app', 'vendor', 'manifest']
     }),
     new CleanWebpackPlugin(['build'], {
       root: process.cwd(),
       verbose: true
     }),
-    new PurifyCssPlugin({
-      basePath: process.cwd(),
-      paths: [path.resolve('client')],
-      purifyOptions: {
-        minify: true,
-        info: true
-      }
-    }),
+    // new PurifyCssPlugin({
+    //   basePath: process.cwd(),
+    //   paths: [path.resolve('client')],
+    //   purifyOptions: {
+    //     minify: true,
+    //     info: true
+    //   }
+    // }),
     new AppCachePlugin({
       exclude: ['.htaccess']
     }),
