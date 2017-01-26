@@ -17,9 +17,9 @@ const config = {
       path.resolve('node_modules', 'font-awesome/css', 'font-awesome.css'),
       path.resolve('client/styles', 'base.scss')
     ],
-    react: ["react", "react-chartjs2", "react-dom", "react-redux", "react-router"],
-    redux: ["redux", "redux-logger", "redux-thunk"],
-    utils: ["axios", "howler", "classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
+    vendor: ["react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "axios", "howler", "classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
+    // redux: ["redux", "redux-logger", "redux-thunk"],
+    // utils: ["axios", "howler", "classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
     // ["axios", "classnames", "howler", "jsonwebtoken", "lodash", "react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "shortid", "validator"]
   },
   output: {
@@ -99,7 +99,7 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['styles', 'app', 'react', 'redux', 'utils', 'manifest']
+      names: ['styles', 'app', 'vendor', 'manifest']
     }),
     new CleanWebpackPlugin(['build'], {
       root: process.cwd(),
