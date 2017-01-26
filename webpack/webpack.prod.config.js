@@ -19,9 +19,7 @@ const config = {
     ],
     react: ["react", "react-chartjs2", "react-dom", "react-redux", "react-router"],
     redux: ["redux", "redux-logger", "redux-thunk"],
-    axios: ["axios"],
-    howler: ["howler"],
-    utils: ["classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
+    utils: ["axios", "howler", "classnames", "jsonwebtoken", "lodash", "shortid", "validator"]
     // ["axios", "classnames", "howler", "jsonwebtoken", "lodash", "react", "react-chartjs2", "react-dom", "react-redux", "react-router", "redux", "redux-logger", "redux-thunk", "shortid", "validator"]
   },
   output: {
@@ -101,7 +99,7 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['styles', 'app', 'react', 'redux', 'axios', 'howler', 'utils', 'manifest']
+      names: ['styles', 'app', 'react', 'redux', 'utils', 'manifest']
     }),
     new CleanWebpackPlugin(['build'], {
       root: process.cwd(),
