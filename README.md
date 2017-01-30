@@ -6,9 +6,9 @@ Here are several sources for more information:
 * [Article about flash anzan and soroban](https://www.theguardian.com/science/alexs-adventures-in-numberland/2012/oct/29/mathematics)
 * [More in depth about flash anzan and Japanese education](https://www.tofugu.com/japan/japanese-math/)
 
-![Flash Anzan Caption 1](./screenshot1.jpg)
+![Flash Anzan Caption 1](./screenshot_1.jpg)
 ***
-![Flash Anzan Caption 2](./screenshot2.jpg)
+![Flash Anzan Caption 2](./screenshot_2.jpg)
 
 ## TODOS
 * Edit photo feature
